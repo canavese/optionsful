@@ -1,1 +1,0 @@
-puts "\n===> Uninstalling Rails OPTIONSful plugin. Thank you.\n"
