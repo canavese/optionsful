@@ -7,7 +7,9 @@ Provide dynamic information about resources via the OPTIONS' HTTP method on a RE
 * Note for the unfaithful: run @rake routes@ to validate the results.
 
 h2. "-No! No! No! *-Show me the code!*" 
+
 <pre>
+  
 $ telnet kayaman.baurets.net 3000 
 OPTIONS /notes HTTP/1.1
 Host: kayaman.baurets.net
@@ -26,6 +28,7 @@ Date: Sat, 10 Jul 2010 23:47:47 GMT
 Link: <http://baurets.net/api/resources>; type=text/html; rel=help
 
 </pre>
+
 ~Note the empty line which is part of the HTTP protocol.~
 
 h2. INSTALLATION:
