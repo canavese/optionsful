@@ -26,7 +26,6 @@ class Optionsful
     allows = ""
     # do the matches:
     routes.each do |route|
-      puts "route match: #{route.inspect}"
       if route.first == route_guess
         allows += route[1].to_s.upcase! + "|" 
       end
