@@ -34,9 +34,13 @@ Link: <http://baurets.net/api/resources>; type=text/html; rel=help
 h2. INSTALLATION:
 
 # Change directory to your Ruby on Rails web application,
-# Run:
+# Add gem dependency to @config/environment.rb@:
 <pre>
-  $ script/plugin install git://github.com/kayaman/optionsful.git
+  config.gem "optionsful"
+</pre>
+# To install it, run:
+<pre>
+  $ gem install optionsful
 </pre>
 # Have fun!
 
