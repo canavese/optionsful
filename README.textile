@@ -1,0 +1,54 @@
+h1. Rails OPTIONSful
+
+Provide dynamic information about resources via the OPTIONS' HTTP method on a RESTful design over the Ruby on Rails framework.
+
+h2. "-No! No! No! *-Show me the code!*" 
+~Note: installation instructions below~
+<pre>
+$ telnet localhost 3000 
+OPTIONS /notes HTTP/1.1
+Host: kayaman.baurets.net
+
+HTTP/1.1 204 No Content 
+Allow: GET, POST
+Date: Sat, 10 Jul 2010 23:46:00 GMT
+Link: <http://baurets.net/api/resources>; type=text/html; rel=help
+
+OPTIONS /notes/1 HTTP/1.1
+Host: kayaman.baurets.net
+
+HTTP/1.1 204 No Content 
+Allow: GET, PUT, DELETE
+Date: Sat, 10 Jul 2010 23:47:47 GMT
+Link: <http://baurets.net/api/resources>; type=text/html; rel=help
+
+</pre>
+~Note the empty line which is part of the HTTP protocol.~
+
+h2. INSTALLATION:
+
+# change directory to your Ruby on Rails web application,
+# run:
+<pre>
+  $ script/plugin install git://github.com/kayaman/optionsful.git
+</pre>
+# Have fun!
+
+h2. TODO & WHISH-LIST
+* -Make the installation easier.-
+* Create tests! (Oh no! Psst! Don't tell anyone!)
+* Research if there are means to know whether formats (types) each one of available methods can accept and serve - WHY NOT make use of BRUTE FORCE? 8-D - We Will Rock You approach - IT WILL BE ANOTHER PROJECT?
+* Provide on demand human readable documentation (maybe attribute oriented programming) hopefully supporting the _about to be given_ @Link@ HTTP header 
+* -Implement instrumentation, logging - (really needed?)-
+* -Research if there are means to test authorization, if Authorization header provided in the request- OUT_OF_SCOPE
+
+
+h2. KNOWN ISSUES
+* -Rails route recognition need hard work-
+* Platform: ruby 1.8.7, rails 2.3.8, rack 1.2.1
+
+h2. CONTRIBUTORS
+* Me, myself and I, so far.
+* You are welcome, do it. ;-)
+
+Copyright (c) 2010 Marco Antonio Gonzalez Junior, kayaman@baurets.net, released under the MIT license.
