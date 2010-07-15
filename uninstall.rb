@@ -1,1 +1,1 @@
-# Uninstall hook code here
+puts "\n===> Uninstalling Rails OPTIONSful plugin. Thank you.\n"

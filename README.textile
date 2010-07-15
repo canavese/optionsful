@@ -2,10 +2,13 @@ h1. Rails OPTIONSful
 
 Provide dynamic information about resources via the OPTIONS' HTTP method on a RESTful design over the Ruby on Rails framework.
 
+* Note for the impatient: installation instructions below.
+* Note for the dummies: change host names and paths properly.
+* Note for the unfaithful: run @rake routes@ to validate the results.
+
 h2. "-No! No! No! *-Show me the code!*" 
-~Note: installation instructions below~
 <pre>
-$ telnet localhost 3000 
+$ telnet kayaman.baurets.net 3000 
 OPTIONS /notes HTTP/1.1
 Host: kayaman.baurets.net
 
@@ -27,8 +30,8 @@ Link: <http://baurets.net/api/resources>; type=text/html; rel=help
 
 h2. INSTALLATION:
 
-# change directory to your Ruby on Rails web application,
-# run:
+# Change directory to your Ruby on Rails web application,
+# Run:
 <pre>
   $ script/plugin install git://github.com/kayaman/optionsful.git
 </pre>
