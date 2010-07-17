@@ -15,7 +15,11 @@ class Optionsful
   private
 
   def extract_options_information(env)
-    [204, {"Allow" => extract_allowed_methods(env), "Link" => build_help_link}, ""]  
+    if is_help_extras_enabled?(env["PATH_INFO"])
+      [303, {"Location" => build_location_uri(env), "Content-Type" => "text/html"}, "<html><body>Please go to <h1><a href='#{build_location_uri(env)}'>#{build_location_uri(env)}</a></h1></body></html>"]
+    else
+      [204, {"Allow" => extract_allowed_methods(env), "Link" => build_help_link}, ""]
+    end
   end
 
   def extract_allowed_methods(env)
@@ -70,7 +74,6 @@ class Optionsful
         if segment.kind_of?(ActionController::Routing::StaticSegment)
           static_path << segment.value if (segment.respond_to?(:value) && segment.value != "/")
         elsif segment.kind_of?(ActionController::Routing::DynamicSegment)
-          #TODO ignoring (.:format), think about it:
           static_path << :dynamic unless (segment.respond_to?(:key) && segment.key == :format)   
         end
       end
@@ -80,10 +83,18 @@ class Optionsful
   end
 
   def prepare_request_path(path)
-    path = path[0..(path.rindex('.')-1)] if path.include?('.') #TODO ignoring (.:format), think about it
+    path = path[0..(path.rindex('.')-1)] if path.include?('.')
     path_parts = path.split("/")
     path_parts.delete("")
     path_parts
+  end
+
+  def is_help_extras_enabled?(path)
+    path =~ /(.+).help\z/ ? $1 : false
+  end
+
+  def build_location_uri(env)
+    "http://kayaman.baurets.net:3000/posts/help"
   end
 
 end
