@@ -1,49 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
+<head>
+  <title>optionsful</title>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="header"><h1><a href="http://optionsful.rubyforge.com">Rails: Optionsful</a></h1></div>
+    <div id="wrapper">
 
-<body> 
-  <h1>Rails OPTIONSful</h1>
+      <div id="navigation">
 
-  <p>Provide dynamic information about resources via the OPTIONS&#8217; HTTP method on a RESTful design over the Ruby on Rails framework.</p>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#install">Installation</a></li>
+          <li><a href="#usage">Usage</a></li>
+          <li><a href="#todo">Future plans</a></li>
+          <li><a href="#contribute">Contribute</a></li>
+        </ul>
+      </div>
+      <div id="content">
+        <a name="about"/>
+        <p><strong>About</strong></p>
+        <p>Provide dynamic information about resources via the OPTIONS' HTTP method on a RESTful design over the Ruby on Rails framework.</p>
+        <a name="install"/></a>
+        <p><strong>Installation</strong></p>
+        <p>The optionsful gem is currently hosted at RubyGems repository. To install it, run: </p>
+        <pre>
+          $ gem install optionsful  
+        </pre>
+        <ol>
+          <li>Change directory to your Ruby on Rails web application</li>
+          <li>Add gem dependency to config/environment.rb:</li>
+          <pre>
+            config.gem 'optionsful'
+          </pre>
+          <li>Have fun!</li>
+        </ol>
+        <a name="usage"/>
+        <p><strong>Usage examples:</strong></p>
+        <p>The optionsful gem is currently hosted at RubyGems repository. To install it, run: </p>
+        <pre>
+          $ telnet kayaman.baurets.net 3000 
+          OPTIONS /notes HTTP/1.1
+          Host: kayaman.baurets.net
 
-  <ul> 
-    <li>Note for the impatient: installation instructions below.</li> 
-    <li>Note for the dummies: change host names and paths properly.</li> 
-    <li>Note for the unfaithful: run <code>rake routes</code> to validate the results.</li> 
-  </ul>
+          HTTP/1.1 204 No Content 
+          Allow: GET, POST
+          Date: Sat, 10 Jul 2010 23:46:00 GMT
+          Link: <http://baurets.net/api/resources>; type=text/html; rel=help
 
-  <h2>&#8220;-No! No! No! <strong>-Show me the code!</strong>&#8220; </h2>
+          OPTIONS /notes/1 HTTP/1.1
+          Host: kayaman.baurets.net
 
-  <pre>
+          HTTP/1.1 204 No Content 
+          Allow: GET, PUT, DELETE
+          Date: Sat, 10 Jul 2010 23:47:47 GMT
+          Link: <http://baurets.net/api/resources>; type=text/html; rel=help
 
-    $ telnet kayaman.baurets.net 3000 
-    OPTIONS /notes HTTP/1.1
-    Host: kayaman.baurets.net
+          OPTIONS /notes/1/comments/new HTTP/1.1
+          Host: kayaman.baurets.net
 
-    HTTP/1.1 204 No Content 
-    Allow: GET, POST
-    Date: Sat, 10 Jul 2010 23:46:00 GMT
-    Link: <http://baurets.net/api/resources>; type=text/html; rel=help
+          HTTP/1.1 204 No Content 
+          Allow: GET
+          Date: Sat, 10 Jul 2010 23:47:47 GMT
+          Link: <http://baurets.net/api/resources>; type=text/html; rel=help
+        </pre>
+        <p>Note: notice the empty line, which is part of the HTTP protocol</p>
 
-    OPTIONS /notes/1 HTTP/1.1
-    Host: kayaman.baurets.net
+        <a name="todo"/>
+        <p><strong>Future plans:</strong></p>
+        <ol>
+          <li>Provide on demand human readable documentation (maybe attribute oriented programming) hopefully supporting the about to be given Link HTTP header</li>
 
-    HTTP/1.1 204 No Content
-    Allow: GET, PUT, DELETE
-    Date: Sat, 10 Jul 2010 23:47:47 GMT
-    Link: <http://baurets.net/api/resources>; type=text/html; rel=help
+          <li>Make the installation easier.</li>
+          <li>Create tests! (Oh no! Psst! Don’t tell anyone!)</li>
+          <li>Research if there are means to know whether formats (types) each one of available methods can accept and serve – WHY NOT make use of BRUTE FORCE? 8-D – We Will Rock You approach – IT WILL BE ANOTHER PROJECT?</li>
 
-  </pre>
+          <li>Implement instrumentation, logging – (really needed?)</li>
+          <li>Research if there are means to test authorization, if Authorization header provided in the request OUT_OF_SCOPE</li>
+          </ol>
+          <a name="contribute"/>
+          <p><strong>How to contribute:</strong></p>
+          <p>The optionsful project is hosted on <a class="ext" href="http://github.com">Github</a>. You can browser its source code <a class="ext" href="http://github.com/kayaman/optionsful">here</a>
+          </div>
+        </div>
 
-    <p><sub>Note the empty line which is part of the HTTP protocol.</sub></p>
 
-    <h2>INSTALLATION:</h2>
 
-    <ol> <li>Change directory to your Ruby on Rails web application,</li> <li>Run:</li> </ol> <pre> $ script/plugin install git://github.com/kayaman/optionsful.git </pre> <ol> <li>Have fun!</li> </ol>
 
-    <h2>TODO &#38; WHISH-LIST <ul> <li><del>Make the installation easier.</del></li> <li>Create tests! (Oh no! Psst! Don&#8217;t tell anyone!)</li> <li>Research if there are means to know whether formats (types) each one of available methods can accept and serve &#8211; WHY NOT make use of BRUTE FORCE? 8-D &#8211; We Will Rock You approach &#8211; IT WILL BE ANOTHER PROJECT?</li> <li>Provide on demand human readable documentation (maybe attribute oriented programming) hopefully supporting the <em>about to be given</em> <code>Link</code> HTTP header </li> <li><del>Implement instrumentation, logging &#8211; (really needed?)</del></li> <li><del>Research if there are means to test authorization, if Authorization header provided in the request</del> OUT_OF_SCOPE</li> </ul></h2>
+        <div id="extra">
+          <p><strong</strong></p>
+          <p></p>
+        </div>
 
-    <h2>KNOWN ISSUES <ul> <li><del>Rails route recognition need hard work</del></li> <li>Platform: ruby 1.8.7, rails 2.3.8, rack 1.2.1</li> </ul></h2>
-
-    <h2>CONTRIBUTORS <ul> <li>Me, myself and I, so far.</li> <li>You are welcome, do it. ;-)</li> </ul></h2>
-
-    <p>Copyright &#169; 2010 Marco Antonio Gonzalez Junior, kayaman@baurets.net, released under the MIT license.</p> </body></html>
+        <div id="footer">
+          <p style="text-align:center; font-size:80%;">Copyright &#169; 2010 Marco Antonio Gonzalez Junior, <a class="ext" href="mailto:kayaman@baurets.net">kayaman@baurets.net</a>, released under the <a href="MIT-LICENSE">MIT license</a>.</p>
+        </div>
+      </div>
+    </body>
+    </html>
