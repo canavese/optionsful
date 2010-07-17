@@ -1,0 +1,8 @@
+<li><a href="<%= url_for('_index.html') %>">Index</a></li>
+<% n = 1 %>
+<% @items.sort_by {|s| s.name.to_s }.each do |resource| %>
+<% unless resource.tags("url").first.nil? %>
+  <li class="r<%= n %>"><%= linkify(resource, resource.tags("url").first.text) %></li>
+<% end %>
+<% n = n == 2 ? 1 : 2 %>
+<% end %>

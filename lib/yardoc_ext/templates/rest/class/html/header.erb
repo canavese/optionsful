@@ -1,0 +1,24 @@
+<div class="service">
+  <h1><span class="minor_heading">Resource: </span><%= object.tag("url").text %></h1>
+  <% unless object.tags("topic").empty? %>
+    <h3>Topics:</h3> 
+    <ul class="box">
+      <% object.tags("topic").each do |topic| %>
+        <li><%= topic.text %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <%= yieldall %>
+</div>
+
+
+
+
+  
+  
+    
+  
+    
+  
+  
+  

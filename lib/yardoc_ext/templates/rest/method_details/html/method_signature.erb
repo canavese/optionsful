@@ -1,0 +1,7 @@
+<ul class="signature <%= 'first' if @index == 0 %>" id="<%= anchor_for(object) %>">
+  <% if object.tags(:url).size > 0 %>
+    <% object.tags(:url).each do |url| %>
+      <li><%= url.text %></li>
+    <% end %>
+  <% end %>
+</ul>

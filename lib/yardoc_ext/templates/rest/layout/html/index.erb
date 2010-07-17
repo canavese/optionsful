@@ -1,0 +1,55 @@
+<div id="listing">
+  <h1 class="noborder title"><%= options[:title] %></h1>
+  
+  <% if @files && @files.size > 0 %>
+    <h2>Files A-Z</h2>
+    <ul id="files">
+    <% n = 1 %>
+    <% @files.each_with_index do |file, i| %>
+      <li class="r<%= n %>"><%= link_file(file, File.basename(file).gsub(/\.[^.]+$/, '')) %></li>
+      <% n = n == 2 ? 1 : 2 %>
+    <% end %>
+    </ul>
+  <% end %>
+  <div class="clear"></div>
+
+  <h2>Topics A-Z</h2>
+  <% i = 0 %>
+  <table>
+    <tr>
+      <td valign='top' width="33%">
+        <% @topics.sort_by {|t,o| t.to_s }.each do |topic, objects| %>
+          <% if (i += 1) % 8 == 0 %>
+            </td><td valign='top' width="33%">
+            <% i = 0 %>
+          <% end %>
+          <ul id="alpha_<%= topic %>" class="alpha">
+            <li class="letter"><%= topic %></li>
+            <ul>
+              <% objects.each do |obj| %>
+                <% unless obj.tags("url").first.nil? %>
+                  <li>
+                    <%= linkify(obj, obj.tags("url").first.text) %> 
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </ul>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+
+
+  <h2>Resources A-Z</h2>
+  <ul>
+  <% @objects.each do |object| %>
+    <% unless object.tags("url").first.nil? %>
+      <li>
+        <%= linkify(object, object.tags("url").first.text) %> 
+      </li>
+    <% end %>
+  <% end %>
+  </ul>
+
+</div>
