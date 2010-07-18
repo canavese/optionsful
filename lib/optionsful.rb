@@ -94,7 +94,7 @@ class Optionsful
   end
 
   def build_location_uri(env)
-    "http://kayaman.baurets.net:3000/posts/help"
+    "http://localhost:3333/help"
   end
 
 end
