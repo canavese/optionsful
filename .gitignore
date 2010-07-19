@@ -1,4 +1,5 @@
 rubyforge/id_dsa
 rubyforge/id_dsa.pub
 .yardoc
+coverage/
 doc/
