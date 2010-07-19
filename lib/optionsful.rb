@@ -5,21 +5,21 @@ class Optionsful
   end  
 
   def call(env) 
-    unless env["REQUEST_METHOD"] == "OPTIONS"
-      @app.call(env)
+    if is_help_extras_enabled?(env["PATH_INFO"])
+       [303, {"Location" => build_location_uri(env), "Content-Type" => "text/html"}, "<html><body>Please go to <h1><a href='#{build_location_uri(env)}'>#{build_location_uri(env)}</a></h1></body></html>"]
     else
-      extract_options_information(env)
+      unless env["REQUEST_METHOD"] == "OPTIONS"
+        @app.call(env)
+      else
+        extract_options_information(env)
+      end
     end
   end
 
   private
 
   def extract_options_information(env)
-    if is_help_extras_enabled?(env["PATH_INFO"])
-      [303, {"Location" => build_location_uri(env), "Content-Type" => "text/html"}, "<html><body>Please go to <h1><a href='#{build_location_uri(env)}'>#{build_location_uri(env)}</a></h1></body></html>"]
-    else
       [204, {"Allow" => extract_allowed_methods(env), "Link" => build_help_link}, ""]
-    end
   end
 
   def extract_allowed_methods(env)
@@ -94,7 +94,10 @@ class Optionsful
   end
 
   def build_location_uri(env)
-    "http://localhost:3333/help"
+    host = env["REMOTE_HOST"]
+    port = env["SERVER_PORT"]
+    path = is_help_extras_enabled?(env["PATH_INFO"])
+    "http://#{host}:#{port}/help#{path}"
   end
 
 end
