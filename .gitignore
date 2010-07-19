@@ -2,4 +2,8 @@ rubyforge/id_dsa
 rubyforge/id_dsa.pub
 .yardoc
 doc/
+<<<<<<< HEAD:.gitignore
 coverage/
+=======
+coverage/
+>>>>>>> metric_fu:.gitignore

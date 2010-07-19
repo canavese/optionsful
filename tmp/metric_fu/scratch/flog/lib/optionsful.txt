@@ -1,0 +1,81 @@
+    96.0: flog total
+    10.7: flog/method average
+
+    37.9: Optionsful#do_routing_introspection lib/optionsful.rb:65
+    13.7:   branch
+     5.4:   assignment
+     5.0:   <<
+     3.8:   value
+     3.7:   conditions
+     3.5:   ==
+     3.5:   respond_to?
+     3.3:   []
+     3.1:   kind_of?
+     2.6:   each
+     2.0:   key
+     1.6:   segments
+     1.4:   nil?
+     1.4:   routes
+
+    21.5: Optionsful#extract_allowed_methods lib/optionsful.rb:21
+     7.5:   assignment
+     3.6:   []
+     3.0:   +
+     2.5:   branch
+     2.0:   to_s
+     1.8:   upcase!
+     1.5:   first
+     1.4:   split
+     1.3:   ==
+     1.2:   join
+     1.2:   do_routing_introspection
+     1.2:   each
+     1.2:   guess_route
+     0.6:   lit_fixnum
+
+    11.0: Optionsful#guess_route           lib/optionsful.rb:41
+     6.3:   assignment
+     3.0:   <<
+     2.6:   branch
+     1.4:   is_part_static?
+     1.4:   +
+     1.2:   each
+     1.2:   prepare_request_path
+     0.4:   lit_fixnum
+
+     9.0: Optionsful#prepare_request_path  lib/optionsful.rb:82
+     2.5:   assignment
+     1.7:   rindex
+     1.5:   -
+     1.3:   []
+     1.2:   split
+     1.2:   include?
+     1.2:   branch
+     1.2:   delete
+     0.4:   lit_fixnum
+
+     6.4: Optionsful#is_part_static?       lib/optionsful.rb:56
+     3.2:   []
+     2.5:   branch
+     1.3:   assignment
+     1.3:   ==
+     1.2:   each
+
+     5.3: Optionsful#call                  lib/optionsful.rb:7
+     1.4:   []
+     1.3:   extract_options_information
+     1.3:   call
+     1.2:   ==
+     1.2:   branch
+
+     2.7: Optionsful#extract_options_information lib/optionsful.rb:17
+     1.2:   extract_allowed_methods
+     1.2:   build_help_link
+     0.3:   lit_fixnum
+
+     1.2: Optionsful#initialize            lib/optionsful.rb:3
+     1.2:   assignment
+
+     1.1: Optionsful#none
+     1.1:   private
+
