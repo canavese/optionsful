@@ -46,11 +46,7 @@ h2. INSTALLATION:
 
 h2. TODO & WHISH-LIST
 * -Make the installation easier.-
-* Create tests! (Oh no! Psst! Don't tell anyone!)
-* Research if there are means to know whether formats (types) each one of available methods can accept and serve - WHY NOT make use of BRUTE FORCE? 8-D - We Will Rock You approach - IT WILL BE ANOTHER PROJECT?
-* Provide on demand human readable documentation (maybe attribute oriented programming) hopefully supporting the _about to be given_ @Link@ HTTP header 
-* -Implement instrumentation, logging - (really needed?)-
-* -Research if there are means to test authorization, if Authorization header provided in the request- OUT_OF_SCOPE
+* -Create tests! (Oh no! Psst! Don't tell anyone!)-
 
 
 h2. KNOWN ISSUES
