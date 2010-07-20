@@ -59,8 +59,8 @@ DEFAULT_ENV = { "rack.version" => Rack::VERSION, "rack.input" => StringIO.new, "
       response
     end
     
-    def allows?(response, method)
-      response.headers["Allow"].contain?(method)
+    def allows?(headers, method)
+      headers["Allow"].include?(method)
     end
       
 

@@ -30,15 +30,14 @@ describe "Baurets::Optionsful," do
       assert response[1].kind_of? Hash
       assert response[2].kind_of? String
     end
-    
-    it "must be nice, somewhere on a Rack middleware stack." do
+
+    it "must be nice, acting somewhere on a Rack middleware stack." do
       response = fake_app.call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
       assert response.size.should == 3
       assert response[0].kind_of? Fixnum
       assert response[0].should == 204
       assert response[1].kind_of? Hash
       assert response[1]["Allow"]
-      # assert response[1]["Allow"].should_not be_nil
     end
 
   end
@@ -53,43 +52,49 @@ describe "Baurets::Optionsful," do
         it "the index action displays a list of all posts in response of a GET request;" do
           response = http_options_request("/posts")
           assert response.kind_of?(Array)
-          assert response[1]["Allow"]
+          assert allows?(response[1], "GET")
         end
-        
+
         it "the new action return from a GET request an HTML form for creating a new post;" do
           response = http_options_request("/posts/new")
           assert response.kind_of?(Array)
+          assert allows?(response[1], "GET")
         end
-        
+
         it "the create action uses POST to create a new post instance;" do
           response = http_options_request("/posts")
           assert response.kind_of?(Array)
+          assert allows?(response[1], "POST")
         end
-        
+
         it "the show action display a specific post in response of a GET request;" do
           response = http_options_request("/posts/1")
           assert response.kind_of?(Array)
+          assert allows?(response[1], "GET")
         end
-        
+
         it "the edit action return an HTML form for editing a post in response of a GET request;" do
           response = http_options_request("/posts/1/edit")
           assert response.kind_of?(Array)
+          assert allows?(response[1], "GET")
         end
-        
+
         it "the update action uses PUT to update a specific post;" do
           response = http_options_request("/posts/1")
           assert response.kind_of?(Array)
+          assert allows?(response[1], "PUT")
         end
-        
+
         it "the destroy action uses DELETE to delete a specific post." do
           response = http_options_request("/posts/1")
           assert response.kind_of?(Array)
+          assert allows?(response[1], "DELETE")
         end 
-        
+
       end
-      
+
     end
-    
+
   end
 
   describe " dispatch the call to the application unless HTTP method equals OPTIONS " do
