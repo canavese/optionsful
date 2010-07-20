@@ -1,6 +1,5 @@
-rubyforge/id_dsa
-rubyforge/id_dsa.pub
-.yardoc
+rubyforge/
+.yardoc?
 doc/
 coverage/
 tmp/
