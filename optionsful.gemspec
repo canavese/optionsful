@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.summary = %q{Optionsful provide dynamic information via HTTP's OPTION method over a Ruby on Rails applications.}
   s.homepage = %q{http://optionsful.rubyforge.org}
   s.description = %q{Optionsful provide dynamic information via HTTP's OPTION method.}
-  s.files = [ "README.textile", "MIT-LICENSE", "lib/baurets/optionsful.rb", "rails/init.rb", 
+  s.files = [ "README.textile", "MIT-LICENSE", "lib/optionsful.rb", "rails/init.rb", 
               "lib/tasks/optionsful.rake", "Rakefile", "spec/optionsful_spec.rb", "spec/spec.opts", 
               "spec/spec_helper.rb"
             ]

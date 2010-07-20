@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 
-describe "Baurets::Optionsful," do
+describe "Optionsful," do
 
   include Rack::Test::Methods
 
@@ -15,16 +15,16 @@ describe "Baurets::Optionsful," do
   describe "as a Rack middleware" do
 
     it "is a Ruby object that responds to call;" do
-      assert Baurets::Optionsful.new(app).respond_to? :call
+      assert Optionsful.new(app).respond_to? :call
     end
 
     it "takes exactly one argument, (the environment) and returns an Array;" do
-      response = Baurets::Optionsful.new(app).call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
+      response = Optionsful.new(app).call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
       assert response.kind_of?(Array)
     end
 
     it "the returned Array must have exactly three values: the status, the headers and the body;" do
-      response = Baurets::Optionsful.new(app).call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
+      response = Optionsful.new(app).call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
       assert response.size.should == 3
       assert response[0].kind_of? Fixnum 
       assert response[1].kind_of? Hash

@@ -2,7 +2,8 @@
   class Optionsful  
 
     def initialize(app)  
-      @app = app  
+      @app = app
+      @doc = []
     end  
 
     def call(env) 
@@ -24,19 +25,19 @@
       routes = do_routing_introspection
       # do request path investigation
       route_guess = guess_route(routes, env["PATH_INFO"])
-      allows = ""
+      allow = ""
       # do the matches:
       routes.each do |route|
         if route.first == route_guess
-          allows += route[1].to_s.upcase! + "|" 
+          allow += route[1].to_s.upcase! + "|" 
+          @doc << route[2]
         end
       end
-      allows = allows.split("|").join(", ")
+      allow = allow.split("|").join(", ")
     end
 
     def build_help_link
-      #PENDING
-      "<http://baurets.net/api/resources>; type=text/html; rel=help"
+      "<http://baurets.net/api/resources>; type=text/html; rel=help c: #{@doc.size}"
     end
 
     def guess_route(routes, path)
@@ -74,7 +75,7 @@
             static_path << :dynamic unless (segment.respond_to?(:key) && segment.key == :format)   
           end
         end
-        routes << [static_path, route.conditions[:method]] unless route.conditions[:method].nil?
+        routes << [static_path, route.conditions[:method], route.requirements] unless route.conditions[:method].nil?
       end
       routes
     end

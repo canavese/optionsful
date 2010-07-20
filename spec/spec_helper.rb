@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '..', 'lib', 'baurets','optionsful.rb')
+require File.join(File.dirname(__FILE__), '..', 'lib','optionsful.rb')
 
 require 'rubygems' 
 require 'sinatra' 
@@ -41,7 +41,7 @@ DEFAULT_ENV = { "rack.version" => Rack::VERSION, "rack.input" => StringIO.new, "
       app = Rack::Builder.new {
         use Rack::CommonLogger
         use Rack::ShowExceptions
-        use Baurets::Optionsful
+        use Optionsful
         map "/lobster" do
           use Rack::Lint
           run Rack::Lobster.new
@@ -55,7 +55,7 @@ DEFAULT_ENV = { "rack.version" => Rack::VERSION, "rack.input" => StringIO.new, "
 
     def http_options_request(path)
       complex_env = mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => path })
-      response = Baurets::Optionsful.new(app).call(complex_env)
+      response = Optionsful.new(app).call(complex_env)
       response
     end
     

@@ -1,5 +1,5 @@
 rubyforge/
-.yardoc?
+.yardoc/
 doc/
 coverage/
 tmp/
