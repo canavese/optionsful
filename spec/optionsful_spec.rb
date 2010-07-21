@@ -32,7 +32,7 @@ describe "Optionsful," do
     end
 
     it "must be nice, acting somewhere on a Rack middleware stack." do
-      response = fake_app.call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
+      response = fake_opts_app.call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
       assert response.size.should == 3
       assert response[0].kind_of? Fixnum
       assert response[0].should == 204
@@ -101,7 +101,7 @@ describe "Optionsful," do
 
     it " method GET example" do
       complex_env = mock_env({"REQUEST_METHOD" => "GET", "PATH_INFO" => "/lobster" })
-      response = fake_app.call(complex_env)
+      response = fake_opts_app.call(complex_env)
       assert response.kind_of?(Array)
       assert response.size.should == 3
     end

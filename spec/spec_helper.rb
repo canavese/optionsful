@@ -1,4 +1,5 @@
 require File.join(File.dirname(__FILE__), '..', 'lib','optionsful.rb')
+require File.join(File.dirname(__FILE__), '..', 'lib','optionsful_docs.rb')
 
 require 'rubygems' 
 require 'sinatra' 
@@ -37,11 +38,23 @@ DEFAULT_ENV = { "rack.version" => Rack::VERSION, "rack.input" => StringIO.new, "
     end
 
 
-    def fake_app
+    def fake_opts_app
       app = Rack::Builder.new {
         use Rack::CommonLogger
         use Rack::ShowExceptions
         use Optionsful
+        map "/lobster" do
+          use Rack::Lint
+          run Rack::Lobster.new
+        end
+      }
+    end
+    
+    def fake_docs_app
+      app = Rack::Builder.new {
+        use Rack::CommonLogger
+        use Rack::ShowExceptions
+        use OptionsfulDocs
         map "/lobster" do
           use Rack::Lint
           run Rack::Lobster.new
@@ -56,7 +69,6 @@ DEFAULT_ENV = { "rack.version" => Rack::VERSION, "rack.input" => StringIO.new, "
     def http_options_request(path)
       complex_env = mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => path })
       response = Optionsful.new(app).call(complex_env)
-      response
     end
     
     def allows?(headers, method)
