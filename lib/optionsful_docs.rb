@@ -31,7 +31,7 @@ class OptionsfulDocs
     http_methods.each do |verb|
       controller_actions << [verb, relate_action_to_method(parts, verb)]
     end
-    
+
     controller_actions.delete_if {|pair| pair[1].empty? }
     puts "controller_actions: #{controller_actions.inspect}"
     controller_name = Introspections.discover_controller_name(parts) + "_controller"
@@ -47,7 +47,9 @@ class OptionsfulDocs
 
     body = "\n\nService: \n" + service_doc + "\n" 
     methods_docs.each do |md|
-      body += "\n\nMethod: #{md[0][0]} \n Action: #{md[0][1]} \n-- end ---\n"
+      puts "#{md.inspect}"
+
+      body += "\n\nMethod: #{md[0][0]} \n Action: #{md[0][1]} \n Metadata: \n #{md[1]}-- end ---\n"
     end
 
     [200, {}, "Under development!!! \n  #{body}"]
@@ -58,13 +60,6 @@ class OptionsfulDocs
     routes = Introspections.do_routing_introspection
     route_guess = Introspections.guess_route(routes, path)
     routes.each do |route|
-      # puts "PATH: #{path.inspect}"
-      # puts "GUESS: #{route_guess.inspect}"
-      # 
-      puts "Route inspection: #{route.inspect}"
-      # puts "Route first: #{route.first.inspect}"
-      # puts "VERB: #{verb}"
-
       if ((route.first == route_guess) && (route[1][0] == verb))
         action = route[1][1] unless route[1][1].empty?
       end
@@ -94,16 +89,26 @@ class OptionsfulDocs
   def extract_comments_above(file_name, line_number)
     puts "extract_comments_above(#{file_name}, #{line_number})"
     lines = file_lines(file_name)
+     puts "extract_comments_above #{lines.size})"
     doc = []
-    while ((line_number = line_number -1) && line_number >= 0 && !lines.nil? && !lines[line_number].empty? )#&& lines[line_number].lstrip[0] == "#")
+    while ((line_number = line_number -2) && (line_number >= 0) && (!lines.nil?) && (!lines[line_number].empty?))
       line = lines[line_number].lstrip
-      line = line
-      doc << line unless line[0] != 35 # 
+      puts "line[0]:#{line[0]} - line: #{line}"
+      if line[0] == 35
+        doc << line
+        
+      else
+        line_number = 0
+      end 
+      line_number = line_number -1
     end
     doc.reverse
+    puts doc.inspect
+    doc
   end
 
   def find_line_for(file, name, type) 
+    lines = file_lines(file)
     signature = ""
     if type == :class
       signature = "class " + name
@@ -111,19 +116,12 @@ class OptionsfulDocs
       signature = "def " + name
     end
     counter = 1;
-    begin
-      file = File.new(file, "r")
-      while (line = file.gets)
-        if line.include? signature
-          return counter
-        end
-        counter += 1
+    lines.each do |line|
+      if line.include? signature
+        return counter
       end
-      file.close
-    rescue => err
-      err
+      counter += 1
     end
-    counter
   end
 
   def location(env)
