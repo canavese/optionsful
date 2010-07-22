@@ -1,6 +1,8 @@
 
 module Introspections
 
+
+
   def self.guess_route(routes, path)
     parts = prepare_request_path(path)
     guess = []
@@ -69,6 +71,15 @@ module Introspections
     
   end
 
+  def self.do_the_matches(routes, route_guess)
+    allow = ""
+    routes.each do |route|
+      if route.first == route_guess
+        allow += route[1][0].to_s.upcase + "|" 
+      end
+    end
+    allow = allow.split("|").join(", ")
+  end
 
   def self.prepare_request_path(path)
     unless path.kind_of? Array

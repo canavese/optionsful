@@ -24,8 +24,15 @@ class OptionsfulDocs
     parts = env["PATH_INFO"].split("/")
     parts.delete("")
     parts.delete("opts")
-    # puts "#{parts.inspect}"
-    http_methods = parts.pop.split(";")
+    # do routing introspection:
+    routes = Introspections.do_routing_introspection
+    # do request path investigation
+    path = parts.join("/")
+    puts "\n #{path} \n"
+    route_guess = Introspections.guess_route(routes,path)
+    # do the matches:
+    allow = Introspections.do_the_matches(routes, route_guess)
+    http_methods = allow.split(", ")
 
     controller_actions = []
     http_methods.each do |verb|
@@ -85,21 +92,17 @@ class OptionsfulDocs
   end  
 
   def extract_comments_above(file_name, line_number)
-    puts "extract_comments_above(#{file_name}, #{line_number})"
     lines = file_lines(file_name)
-     puts "extract_comments_above => size=#{lines.size})"
     doc = []
     line_number = line_number -1
     while ((line_number = line_number -1) && (line_number >= 0) && (!lines.nil?) && (!lines[line_number].empty?))
       line = lines[line_number].lstrip
-      puts "line_number: #{line_number}=> line[0]:#{line[0]} - line: #{line}"
       if line[0] == 35
         doc << line
         
       else
         line_number = 0
       end 
-      # line_number = line_number -1
     end
     doc.reverse
     puts doc.inspect
@@ -122,15 +125,5 @@ class OptionsfulDocs
       counter += 1
     end
   end
-
-  def location(env)
-    server_name = env["SERVER_NAME"]
-    server_port = env["SERVER_PORT"]
-    "http://#{server_name}:#{server_port}/api/"
-  end
-
-
-
-
 
 end

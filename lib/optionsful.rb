@@ -38,7 +38,7 @@ class Optionsful
     allow = ""
     routes.each do |route|
       if route.first == route_guess
-        allow += route[1].to_s.upcase! + "|" 
+        allow += route[1][0].to_s.upcase + "|" 
         @doc[:controller] = route[2][:controller]
         @doc[:actions] << { :action => (route[2][:action]), :method => (route[1].to_s.upcase!) }
       end
@@ -49,10 +49,7 @@ class Optionsful
   def build_help_link(env)
     server_name = env["SERVER_NAME"]
     server_port = env["SERVER_PORT"]
-    methodz = ""
-    @doc[:actions].each {|info| methodz << info[:method] + " " }
-    methodz = methodz.split(" ").join(";")
-    "<http://#{server_name}:#{server_port}/opts/#{@doc[:controller]}/#{methodz}>; type=text/html; rel=help"
+    "<http://#{server_name}:#{server_port}/opts#{env["PATH_INFO"]}>; type=text/html; rel=help"
   end
 
 
