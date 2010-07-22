@@ -8,7 +8,7 @@ Provide dynamic information about resources via the OPTIONS' HTTP method on a RE
 
 h2. "-No! No! No! *-Show me the code!*" 
 
-h3. Retrieving an HTTP OPTIONS request via telnet:
+h3.   Retrieving an HTTP OPTIONS request via telnet:
 
 <pre>
   
@@ -29,10 +29,8 @@ HTTP/1.1 204 No Content
 Allow: GET, PUT, DELETE
 Connection: close
 Date: Thu, 22 Jul 2010 18:14:24 GMT
-Server: WEBrick/1.3.1 (Ruby/1.8.7/2010-06-23)
 Link: <http://localhost:3000/opts/posts/1/>; type=text/html; rel=help
 
-$ telnet localhost 3000 
 OPTIONS /posts/1/comments HTTP/1.1
 Host: http://localhost:3000
 
@@ -45,10 +43,13 @@ Link: <http://localhost:3000/opts/posts/1/comments>; type=text/html; rel=help
 </pre>
 ~Note the empty line which is part of the HTTP protocol.~
 
-h3. Retrieving the resource/service documentation right from your browser
+h3.   Retrieving the resource/service documentation right from your browser:
 
 * Access the given Link header through your preferable browser. Yeah, via an HTTP GET request. 
 * @http://localhost:3000/opts/posts/1/comments@ for instance.
+* Try up adding some RDoc-like comments above your actions definitions on the appropriate controllers.
+* Refresh the page and your documentation and have fun!
+* There's a lot of helpful things we can do with this extracted 'on-the-fly' information (metadata).
 
 
 h2. INSTALLATION:
