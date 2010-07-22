@@ -10,8 +10,7 @@ require 'spec'
 require 'spec/autorun' 
 require 'spec/interop/test' 
 require 'action_controller' 
-require 'ruby-debug'
-# require 'baurets/optionsful'
+
 
 # set test environment set :environment, :test set :run, false set :raise_errors, true set :logging, false
 
