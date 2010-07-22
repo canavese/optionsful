@@ -3,3 +3,4 @@ rubyforge/
 doc/
 coverage/
 tmp/
+.rvmrc
