@@ -47,9 +47,7 @@ class OptionsfulDocs
 
     body = "\n\nService: \n" + service_doc + "\n" 
     methods_docs.each do |md|
-      puts "#{md.inspect}"
-
-      body += "\n\nMethod: #{md[0][0]} \n Action: #{md[0][1]} \n Metadata: \n #{md[1]}-- end ---\n"
+      body += "\n\nMethod: #{md[0][0]} \n Action: #{md[0][1]} \n Metadata: \n #{md[1]}\n\n-- end ---\n"
     end
 
     [200, {}, "Under development!!! \n  #{body}"]
@@ -89,18 +87,19 @@ class OptionsfulDocs
   def extract_comments_above(file_name, line_number)
     puts "extract_comments_above(#{file_name}, #{line_number})"
     lines = file_lines(file_name)
-     puts "extract_comments_above #{lines.size})"
+     puts "extract_comments_above => size=#{lines.size})"
     doc = []
-    while ((line_number = line_number -2) && (line_number >= 0) && (!lines.nil?) && (!lines[line_number].empty?))
+    line_number = line_number -1
+    while ((line_number = line_number -1) && (line_number >= 0) && (!lines.nil?) && (!lines[line_number].empty?))
       line = lines[line_number].lstrip
-      puts "line[0]:#{line[0]} - line: #{line}"
+      puts "line_number: #{line_number}=> line[0]:#{line[0]} - line: #{line}"
       if line[0] == 35
         doc << line
         
       else
         line_number = 0
       end 
-      line_number = line_number -1
+      # line_number = line_number -1
     end
     doc.reverse
     puts doc.inspect
