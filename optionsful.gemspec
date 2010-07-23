@@ -14,5 +14,5 @@ Gem::Specification.new do |s|
     "spec/spec_helper.rb", "lib/baurets/optionsful/documentator.rb", "lib/baurets/optionsful/introspections.rb", 
     "lib/baurets/optionsful/version.rb","lib/baurets/optionsful/config.rb", "lib/optionsful.rb", "spec/optionsful_documentator_spec.rb"
   ]
-
+  s.add_dependency("RedCloth", ">= 4.2.2")
 end

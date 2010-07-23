@@ -18,8 +18,12 @@ module Baurets
           end
         end
       end
-      
+
       private
+
+      require 'rubygems'
+      require 'yaml'
+      require 'RedCloth'
 
       def extract_documentation(env)
         path = env["PATH_INFO"]
@@ -44,19 +48,54 @@ module Baurets
         file = File.join(RAILS_ROOT, "app", "controllers", controller_name + ".rb")
         controller_class = controller_name.camelize
 
-        service_doc = extract_comments_above(file, find_line_for(file, controller_class, :class)).join("\n")
+        service_doc = extract_comments_above(file, find_line_for(file, controller_class, :class))
 
         methods_docs = []
         controller_actions.each do |info|
           methods_docs << [info, extract_comments_above(file, find_line_for(file, info[1], :method)).join("\n")]
         end
 
-        body = "\n\nService: \n" + service_doc + "\n" 
-        methods_docs.each do |md|
-          body += "\n\nMethod: #{md[0][0]} \n Action: #{md[0][1]} \n Metadata: \n #{md[1]}\n\n-- end ---\n"
+        body = build_html(service_doc, methods_docs)
+
+        [200, {"Content-Type" => "text/html"},  body]
+      end
+
+
+      def build_html(comment, methods)
+        puts comment.class
+        puts "comment (raw): #{comment.class}\n" + comment.join("\n") + "\n"
+        comments = comment.join("\n").gsub(/^#+\s/, '')
+        puts "comments: #{comments.class}\n" + comments
+        resource = YAML::parse(comments)
+        html = "<html><head></head><body>"
+
+        puts resource.class
+        puts "resource: " + resource.inspect
+        puts resource['resource'] 
+        puts resource["resource"].inspect
+
+        resource_title = resource["resource"]["title"].value
+
+        title = "h1. " + resource_title.to_s if resource_title
+
+        html += RedCloth.new(title).to_html
+        
+        html += RedCloth.new("#{resource["resource"]["description"].value}").to_html
+
+        methods.each do |meth|
+          meth_verb = meth[0][0]
+          # meth_doc = meth[1].join("\n").gsub(/^#+\s/, '')
+          # 
+          # obj = YAML::parse(meth_doc)
+          # 
+          
+          html += RedCloth.new("*" + meth_verb).to_html
         end
 
-        [200, {}, "Under development!!! \n  #{body}"]
+
+
+        html += "</body></html>"
+        html
       end
 
       def relate_action_to_method(path, verb)
@@ -100,7 +139,7 @@ module Baurets
             line_number = 0
           end 
         end
-        doc.reverse
+        doc = doc.reverse
         doc
       end
 
