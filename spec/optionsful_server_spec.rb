@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 
-describe "Optionsful," do
+describe Baurets::Optionsful::Server do
 
   include Rack::Test::Methods
 
@@ -15,16 +15,16 @@ describe "Optionsful," do
   describe "as a Rack middleware" do
 
     it "is a Ruby object that responds to call;" do
-      assert Optionsful.new(app).respond_to? :call
+      assert ::Baurets::Optionsful::Server.new(app).respond_to? :call
     end
 
     it "takes exactly one argument, (the environment) and returns an Array;" do
-      response = Optionsful.new(app).call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
+      response = ::Baurets::Optionsful::Server.new(app).call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
       assert response.kind_of?(Array)
     end
 
     it "the returned Array must have exactly three values: the status, the headers and the body;" do
-      response = Optionsful.new(app).call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
+      response = ::Baurets::Optionsful::Server.new(app).call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
       assert response.size.should == 3
       assert response[0].kind_of? Fixnum 
       assert response[1].kind_of? Hash
@@ -90,6 +90,16 @@ describe "Optionsful," do
           assert response.kind_of?(Array)
           assert allows?(response[1], "DELETE")
         end 
+        
+        it "not found a path" do
+          response = http_options_request("/sblingers/sblongers")
+          assert response.kind_of?(Array)
+          assert response[0].should == 404
+        end
+        
+        it "not finding a path, pretend you're dead and.. let it goes through" do
+          pending
+        end
 
       end
 

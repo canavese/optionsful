@@ -4,7 +4,7 @@ module Baurets
 
       MAJOR = 0
       MINOR = 1
-      TINY  = 5
+      TINY  = 6
 
       def self.to_s
         "#{MAJOR}.#{MINOR}.#{TINY}"

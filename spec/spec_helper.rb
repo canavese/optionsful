@@ -1,5 +1,8 @@
-require File.join(File.dirname(__FILE__), '..', 'lib','optionsful.rb')
-require File.join(File.dirname(__FILE__), '..', 'lib','optionsful_docs.rb')
+require File.join(File.dirname(__FILE__), '..', 'lib', "baurets", 'optionsful', "config.rb")
+require File.join(File.dirname(__FILE__), '..', 'lib', "baurets", 'optionsful', "server.rb")
+require File.join(File.dirname(__FILE__), '..', 'lib', "baurets", 'optionsful', "documentator.rb")
+require File.join(File.dirname(__FILE__), '..', 'lib', "baurets", 'optionsful', "introspections.rb")
+# TODO ^ this was ugly?! :-S
 
 require 'rubygems' 
 require 'sinatra' 
@@ -41,7 +44,7 @@ DEFAULT_ENV = { "rack.version" => Rack::VERSION, "rack.input" => StringIO.new, "
       app = Rack::Builder.new {
         use Rack::CommonLogger
         use Rack::ShowExceptions
-        use Optionsful
+        use Baurets::Optionsful::Server
         map "/lobster" do
           use Rack::Lint
           run Rack::Lobster.new
@@ -53,7 +56,7 @@ DEFAULT_ENV = { "rack.version" => Rack::VERSION, "rack.input" => StringIO.new, "
       app = Rack::Builder.new {
         use Rack::CommonLogger
         use Rack::ShowExceptions
-        use OptionsfulDocs
+        use Baurets::Optionsful::Documentator
         map "/lobster" do
           use Rack::Lint
           run Rack::Lobster.new
@@ -67,7 +70,7 @@ DEFAULT_ENV = { "rack.version" => Rack::VERSION, "rack.input" => StringIO.new, "
 
     def http_options_request(path)
       complex_env = mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => path })
-      response = Optionsful.new(app).call(complex_env)
+      response = Baurets::Optionsful::Server.new(app).call(complex_env)
     end
     
     def allows?(headers, method)
