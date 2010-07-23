@@ -62,18 +62,9 @@ module Baurets
 
 
       def build_html(comment, methods)
-        puts comment.class
-        puts "comment (raw): #{comment.class}\n" + comment.join("\n") + "\n"
         comments = comment.join("\n").gsub(/^#+\s/, '')
-        puts "comments: #{comments.class}\n" + comments
         resource = YAML::parse(comments)
         html = "<html><head></head><body>"
-
-        puts resource.class
-        puts "resource: " + resource.inspect
-        puts resource['resource'] 
-        puts resource["resource"].inspect
-
         resource_title = resource["resource"]["title"].value
 
         title = "h1. " + resource_title.to_s if resource_title
@@ -84,16 +75,9 @@ module Baurets
 
         methods.each do |meth|
           meth_verb = meth[0][0]
-          # meth_doc = meth[1].join("\n").gsub(/^#+\s/, '')
-          # 
-          # obj = YAML::parse(meth_doc)
-          # 
-          
+          #TODO
           html += RedCloth.new("*" + meth_verb).to_html
         end
-
-
-
         html += "</body></html>"
         html
       end
