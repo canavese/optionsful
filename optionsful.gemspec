@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
      "features/support/env.rb",
      "lib/baurets/optionsful/http_options_server.rb",
      "lib/optionsful.rb",
+     "optionsful.gemspec",
      "spec/optionsful_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
