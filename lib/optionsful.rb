@@ -1,4 +1,4 @@
-require 'baurets/optionsful/http_options_server'
+require 'baurets/optionsful/server'
 
 module Optionsful
   
