@@ -4,13 +4,13 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "optionsful3"
+    gem.name = "optionsful"
     gem.summary = %Q{TODO: one-line summary of your gem}
     gem.description = %Q{TODO: longer description of your gem}
     gem.email = "kayaman@baurets.net"
     gem.homepage = "http://github.com/kayaman/optionsful3"
     gem.authors = ["Marco Antonio Gonzalez Junior"]
-    gem.rubyforge_project = "optionsful3"
+    gem.rubyforge_project = "optionsful"
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.add_development_dependency "yard", ">= 0"
     gem.add_development_dependency "cucumber", ">= 0"
