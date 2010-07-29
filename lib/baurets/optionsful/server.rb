@@ -1,6 +1,6 @@
 module Baurets
   module Optionsful
-    class HttpOptionsServer
+    class Server
 
 
       def initialize(app)  
