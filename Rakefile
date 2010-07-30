@@ -6,7 +6,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "optionsful"
     gem.summary = %Q{Support HTTP OPTIONS verb on your Rails app.}
-    gem.description = %Q{Support HTTP OPTIONS verb on your Rails app.}
+    gem.description = %Q{Help building RESTful web services by support HTTP OPTIONS verb on Ruby on Rails applications.}
     gem.email = "kayaman@baurets.net"
     gem.homepage = "http://github.com/kayaman/optionsful3"
     gem.authors = ["Marco Antonio Gonzalez Junior"]
@@ -26,6 +26,7 @@ end
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new(:spec) do |spec|
   spec.libs << 'lib' << 'spec'
+  spec.spec_opts << '--color --format specdoc'
   spec.spec_files = FileList['spec/**/*_spec.rb']
 end
 
