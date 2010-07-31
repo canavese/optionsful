@@ -172,13 +172,6 @@ describe "Optionsful" do
 
     describe "resources routing with sub-resources" do
 
-      #                      GET    /products/:product_id/comments(.:format)          {:action=>"index", :controller=>"comments"}
-      #     product_comments POST   /products/:product_id/comments(.:format)          {:action=>"create", :controller=>"comments"}
-      #  new_product_comment GET    /products/:product_id/comments/new(.:format)      {:action=>"new", :controller=>"comments"}
-      #                      GET    /products/:product_id/comments/:id(.:format)      {:action=>"show", :controller=>"comments"}
-      #                      PUT    /products/:product_id/comments/:id(.:format)      {:action=>"update", :controller=>"comments"}
-      #      product_comment DELETE /products/:product_id/comments/:id(.:format)      {:action=>"destroy", :controller=>"comments"}
-      # edit_product_comment GET    /products/:product_id/comments/:id/edit(.:format) {:action=>"edit", :controller=>"comments"}
       #                      GET    /products/:product_id/sales(.:format)             {:action=>"index", :controller=>"sales"}
       #        product_sales POST   /products/:product_id/sales(.:format)             {:action=>"create", :controller=>"sales"}
       #     new_product_sale GET    /products/:product_id/sales/new(.:format)         {:action=>"new", :controller=>"sales"}
@@ -186,19 +179,12 @@ describe "Optionsful" do
       #                      PUT    /products/:product_id/sales/:id(.:format)         {:action=>"update", :controller=>"sales"}
       #         product_sale DELETE /products/:product_id/sales/:id(.:format)         {:action=>"destroy", :controller=>"sales"}
       #    edit_product_sale GET    /products/:product_id/sales/:id/edit(.:format)    {:action=>"edit", :controller=>"sales"}
-      #                      POST   /products/:product_id/seller(.:format)            {:action=>"create", :controller=>"sellers"}
-      #   new_product_seller GET    /products/:product_id/seller/new(.:format)        {:action=>"new", :controller=>"sellers"}
-      #                      GET    /products/:product_id/seller(.:format)            {:action=>"show", :controller=>"sellers"}
-      #                      PUT    /products/:product_id/seller(.:format)            {:action=>"update", :controller=>"sellers"}
-      #       product_seller DELETE /products/:product_id/seller(.:format)            {:action=>"destroy", :controller=>"sellers"}
-      #  edit_product_seller GET    /products/:product_id/seller/edit(.:format)       {:action=>"edit", :controller=>"sellers"}
-
 
 
       before(:all) do
         rails_app.routes.draw do
           resources :products do
-            resources :comments, :sales
+            resources :sales
             resource :seller
           end
         end
@@ -234,6 +220,30 @@ describe "Optionsful" do
         response[1]["Allow"].should include "PUT"
         response[1]["Allow"].should include "DELETE"
       end
+      
+      it "the parent resource collection let its sub-resource to be created, read, updated and deleted" do
+        response = http_options_request("/products/123/seller")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Allow"].should include "POST"
+        response[1]["Allow"].should include "GET"
+        response[1]["Allow"].should include "PUT"
+        response[1]["Allow"].should include "DELETE"
+      end
+      
+      it "the parent resource collection offers its sub-resource an entry point for creating a new entry" do
+        response = http_options_request("/products/123/seller/new")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Allow"].should include "GET"
+      end
+      
+      it "the parent resource collection offers its sub-resource an entry point for editing the existing entry" do
+        response = http_options_request("/products/123/seller/edit")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Allow"].should include "GET"
+      end
 
       after(:all) do
         Rails.application.reload_routes!
@@ -242,34 +252,9 @@ describe "Optionsful" do
 
     describe "resources routing with more complex sub-resources" do
 
-      #                      GET    /products/:product_id/comments(.:format)          {:action=>"index", :controller=>"comments"}
-      #     product_comments POST   /products/:product_id/comments(.:format)          {:action=>"create", :controller=>"comments"}
-      #  new_product_comment GET    /products/:product_id/comments/new(.:format)      {:action=>"new", :controller=>"comments"}
-      #                      GET    /products/:product_id/comments/:id(.:format)      {:action=>"show", :controller=>"comments"}
-      #                      PUT    /products/:product_id/comments/:id(.:format)      {:action=>"update", :controller=>"comments"}
-      #      product_comment DELETE /products/:product_id/comments/:id(.:format)      {:action=>"destroy", :controller=>"comments"}
-      # edit_product_comment GET    /products/:product_id/comments/:id/edit(.:format) {:action=>"edit", :controller=>"comments"}
-      # recent_product_sales GET    /products/:product_id/sales/recent(.:format)      {:action=>"recent", :controller=>"sales"}
-      #                      GET    /products/:product_id/sales(.:format)             {:action=>"index", :controller=>"sales"}
-      #        product_sales POST   /products/:product_id/sales(.:format)             {:action=>"create", :controller=>"sales"}
-      #     new_product_sale GET    /products/:product_id/sales/new(.:format)         {:action=>"new", :controller=>"sales"}
-      #                      GET    /products/:product_id/sales/:id(.:format)         {:action=>"show", :controller=>"sales"}
-      #                      PUT    /products/:product_id/sales/:id(.:format)         {:action=>"update", :controller=>"sales"}
-      #         product_sale DELETE /products/:product_id/sales/:id(.:format)         {:action=>"destroy", :controller=>"sales"}
-      #    edit_product_sale GET    /products/:product_id/sales/:id/edit(.:format)    {:action=>"edit", :controller=>"sales"}
-      #                      GET    /products(.:format)                               {:action=>"index", :controller=>"products"}
-      #             products POST   /products(.:format)                               {:action=>"create", :controller=>"products"}
-      #          new_product GET    /products/new(.:format)                           {:action=>"new", :controller=>"products"}
-      #                      GET    /products/:id(.:format)                           {:action=>"show", :controller=>"products"}
-      #                      PUT    /products/:id(.:format)                           {:action=>"update", :controller=>"products"}
-      #              product DELETE /products/:id(.:format)                           {:action=>"destroy", :controller=>"products"}
-      #         edit_product GET    /products/:id/edit(.:format)                      {:action=>"edit", :controller=>"products"}
-
-
       before(:all) do
         rails_app.routes.draw do
           resources :products do
-            resources :comments
             resources :sales do
               get :recent, :on => :collection
             end
@@ -277,12 +262,11 @@ describe "Optionsful" do
         end
       end
 
-      it "the parent resource collection does listing and creation" do
-        response = http_options_request("/products")
+      it "blah" do
+        response = http_options_request("/products/123/sales/recent.xml")
         validate_response(response)
         response[0].should be 204
         response[1]["Allow"].should include "GET"
-        response[1]["Allow"].should include "POST"
       end
 
       after(:all) do
@@ -342,7 +326,7 @@ describe "Optionsful" do
         end
       end
 
-      it "GET / should work" do
+      it " / should work" do
         response = http_options_request("/")
         validate_response(response)
         response[0].should be 204
