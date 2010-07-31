@@ -1,10 +1,14 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib', 'baurets'))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib', 'baurets', 'optionsful'))
 require 'optionsful'
+require 'server'
+require 'introspections'
+
 require 'spec'
 require 'spec/autorun'
 require 'fake_app'
-# require File.join(File.dirname(__FILE__), '..', 'lib', "baurets", 'optionsful', "server.rb")
 require 'rubygems'
 
 require 'rails'
@@ -51,7 +55,6 @@ DEFAULT_ENV = { "rack.version" => Rack::VERSION, "rack.input" => StringIO.new, "
       }
     end
 
-
     def mock_env(options = {})
       FAKE_ENV.merge!(options)
     end
@@ -73,7 +76,7 @@ DEFAULT_ENV = { "rack.version" => Rack::VERSION, "rack.input" => StringIO.new, "
       response[2].should_not be nil
     end
     
-    
     def rails_app 
-      FakeApp.new
+      app = FakeApp.initialize!
+      app
     end

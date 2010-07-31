@@ -1,7 +1,6 @@
 module Baurets
   module Optionsful
     class Server
-      include Baurets::Optionsful::Introspections
 
       def initialize(app)  
         @app = app
@@ -18,8 +17,12 @@ module Baurets
       private
 
       def extract_options_information(env)
-        routing_introspection
-        [204, {"Allow" => %Q{GET}, "Link" => "\"<http://under.development.net\""}, ""]  
+        allows = ::Baurets::Optionsful::Introspections.do_the_matches(env["PATH_INFO"])
+        unless allows.empty?
+          [204, {"Allow" => allows, "Link" => "\"<http://under.development.net\""}, ""]  
+        else
+          [404, {}, "Not found"]
+        end
       end
 
     end
