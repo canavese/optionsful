@@ -18,7 +18,7 @@ describe "Optionsful" do
       response = ::Baurets::Optionsful::Server.new(app).call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
       validate_response(response)
     end
-    
+
     before do
       rails_app.routes.draw do
         resources :posts
@@ -45,6 +45,7 @@ describe "Optionsful" do
     describe "must recognize the Rails resources routing" do
 
       before(:all) do
+        # Sample resource route (maps HTTP verbs to controller actions automatically)å
         rails_app.routes.draw do
           resources :posts
         end
@@ -121,8 +122,117 @@ describe "Optionsful" do
         link.should match /\A"{1}.+"\z/ 
       end
 
+      after(:all) do
+        Rails.application.reload_routes!
+      end
+
     end
+
+    describe "must understand a regular route" do
+
+      before(:all) do
+        rails_app.routes.draw do
+          match 'products/:id' => 'catalog#view'
+        end
+      end
+      # TODO Keep in mind you can assign values other than :controller and :action
+
+      it "a simple matching should work" do
+        response = http_options_request("/products/123")
+        validate_response(response)
+        response[0].should be 204
+      end
+
+      after(:all) do
+        Rails.application.reload_routes!
+      end
+
+    end
+
+    describe "must understand named routes" do
+
+      before(:all) do
+        rails_app.routes.draw do
+          match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+        end
+      end
+
+      it "a simple named route should work" do
+        response = http_options_request("/products/123/purchase")
+        validate_response(response)
+        response[0].should be 204
+      end
+
+      after(:all) do
+        Rails.application.reload_routes!
+      end
+
+    end
+
+    describe "must understand resource routing with options" do
+      before(:all) do
+        rails_app.routes.draw do
+          resources :products do
+            member do
+              get :short
+              post :toggle
+            end
+            collection do
+              get :sold
+            end
+          end
+        end
+      end
+
+      it "a named route with options should work" do
+        response = http_options_request("/products/123/short")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Allow"].should include "GET"
+      end
+      
+      it "a named route with options should work" do
+        response = http_options_request("/products/123/toggle")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Allow"].should include "POST"
+      end
+      
+      it "a named route with options should work" do
+        response = http_options_request("/products/sold")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Allow"].should include "GET"
+      end
+
+      after(:all) do
+        Rails.application.reload_routes!
+      end
+
+    end
+
+
   end
 
 end
 
+# Sample resource route with sub-resources:
+#   resources :products do
+#     resources :comments, :sales
+#     resource :seller
+#   end
+
+# Sample resource route with more complex sub-resources
+#   resources :products do
+#     resources :comments
+#     resources :sales do
+#       get :recent, :on => :collection
+#     end
+#   end
+
+# Sample resource route within a namespace:
+#   namespace :admin do
+#     # Directs /admin/products/* to Admin::ProductsController
+#     # (app/controllers/admin/products_controller.rb)
+#     resources :products
+#   end

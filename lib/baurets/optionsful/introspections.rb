@@ -8,7 +8,11 @@ module Baurets
         allow = ""
         routes.each do |route|
           if path_info =~ route.conditions[:path_info] 
-            allow += (route.verb.to_s.upcase + "|") unless allow.include?(route.verb.to_s.upcase)
+            if route.verb
+              allow += (route.verb.to_s.upcase + "|") unless allow.include?(route.verb.to_s.upcase)
+            else
+              allow = "ANY"
+            end
           end
         end
         allow = allow.split("|").join(", ") 
