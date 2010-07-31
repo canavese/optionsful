@@ -40,12 +40,11 @@ describe "Optionsful" do
 
   end
 
-  context "as an HTTP OPTIONS verb provider" do
+  context "as an HTTP OPTIONS verb provider must master Rails" do
 
-    describe "must recognize the Rails resources routing" do
+    describe "default resources routing" do
 
       before(:all) do
-        # Sample resource route (maps HTTP verbs to controller actions automatically)å
         rails_app.routes.draw do
           resources :posts
         end
@@ -108,7 +107,7 @@ describe "Optionsful" do
         response[1]["Allow"].should include "DELETE"
       end 
 
-      it "not finding a path, return 404 Not Found" do
+      it "not finding a path, gently return 404 Not Found" do
         response = http_options_request("/sblingers/sblongers")
         validate_response(response)
         response[0].should be 404
@@ -128,7 +127,115 @@ describe "Optionsful" do
 
     end
 
-    describe "must understand a regular route" do
+    describe "resources routing with options" do
+      before(:all) do
+        rails_app.routes.draw do
+          resources :products do
+            member do
+              get :short
+              post :toggle
+            end
+            collection do
+              get :sold
+            end
+          end
+        end
+      end
+
+      it "a GET member example should work" do
+        response = http_options_request("/products/123/short")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Allow"].should include "GET"
+      end
+
+      it "a POST member example should work" do
+        response = http_options_request("/products/123/toggle")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Allow"].should include "POST"
+      end
+
+      it "a named route with options should work" do
+        response = http_options_request("/products/sold")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Allow"].should include "GET"
+      end
+
+      after(:all) do
+        Rails.application.reload_routes!
+      end
+
+    end
+
+    describe "resources routing with sub-resources" do
+      before(:all) do
+        rails_app.routes.draw do
+          resources :products do
+            resources :comments, :sales
+            resource :seller
+          end
+        end
+      end
+
+      it "a simple matching should work" do
+        response = http_options_request("/products/123")
+        validate_response(response)
+        response[0].should be 204
+      end
+
+      after(:all) do
+        Rails.application.reload_routes!
+      end
+    end
+
+    describe "resources routing with more complex sub-resources" do
+      before(:all) do
+        rails_app.routes.draw do
+          resources :products do
+            resources :comments
+            resources :sales do
+              get :recent, :on => :collection
+            end
+          end
+        end
+      end
+
+      it "a simple matching should work" do
+        response = http_options_request("/products/123")
+        validate_response(response)
+        response[0].should be 204
+      end
+
+      after(:all) do
+        Rails.application.reload_routes!
+      end
+    end
+
+    describe "resources routing within a namespace" do
+      before(:all) do
+        rails_app.routes.draw do
+          namespace :admin do
+            # Directs /admin/products/* to Admin::ProductsController
+            # (app/controllers/admin/products_controller.rb)
+            resources :products
+          end
+        end
+      end
+
+      it "a simple matching should work" do
+        response = http_options_request("/admin/products/123")
+        validate_response(response)
+        response[0].should be 204
+      end
+
+      after(:all) do
+        Rails.application.reload_routes!
+      end
+    end
+
+    describe "custom regular routing" do
 
       before(:all) do
         rails_app.routes.draw do
@@ -149,16 +256,16 @@ describe "Optionsful" do
 
     end
 
-    describe "must understand named routes" do
+    describe "the root" do
 
       before(:all) do
         rails_app.routes.draw do
-          match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+          root :to => "welcome#index"
         end
       end
 
-      it "a simple named route should work" do
-        response = http_options_request("/products/123/purchase")
+      it "GET / should work" do
+        response = http_options_request("/")
         validate_response(response)
         response[0].should be 204
       end
@@ -169,40 +276,18 @@ describe "Optionsful" do
 
     end
 
-    describe "must understand resource routing with options" do
+    describe "the legacy 'WILD' controller" do
+
       before(:all) do
         rails_app.routes.draw do
-          resources :products do
-            member do
-              get :short
-              post :toggle
-            end
-            collection do
-              get :sold
-            end
-          end
+          match ':controller(/:action(/:id(.:format)))'
         end
       end
 
-      it "a named route with options should work" do
-        response = http_options_request("/products/123/short")
+      it "a simple matching should work" do
+        response = http_options_request("/products/show/123.json")
         validate_response(response)
         response[0].should be 204
-        response[1]["Allow"].should include "GET"
-      end
-      
-      it "a named route with options should work" do
-        response = http_options_request("/products/123/toggle")
-        validate_response(response)
-        response[0].should be 204
-        response[1]["Allow"].should include "POST"
-      end
-      
-      it "a named route with options should work" do
-        response = http_options_request("/products/sold")
-        validate_response(response)
-        response[0].should be 204
-        response[1]["Allow"].should include "GET"
       end
 
       after(:all) do
@@ -214,25 +299,5 @@ describe "Optionsful" do
 
   end
 
+
 end
-
-# Sample resource route with sub-resources:
-#   resources :products do
-#     resources :comments, :sales
-#     resource :seller
-#   end
-
-# Sample resource route with more complex sub-resources
-#   resources :products do
-#     resources :comments
-#     resources :sales do
-#       get :recent, :on => :collection
-#     end
-#   end
-
-# Sample resource route within a namespace:
-#   namespace :admin do
-#     # Directs /admin/products/* to Admin::ProductsController
-#     # (app/controllers/admin/products_controller.rb)
-#     resources :products
-#   end
