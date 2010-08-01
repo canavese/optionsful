@@ -11,7 +11,8 @@ module Baurets
             if route.verb
               allow += (route.verb.to_s.upcase + "|") unless allow.include?(route.verb.to_s.upcase)
             else
-              allow = "ANY"
+              # TODO - return 'ANY' doesn't sound ANY good ;p
+              allow = "GET" 
             end
           end
         end

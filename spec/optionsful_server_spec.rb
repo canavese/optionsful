@@ -5,16 +5,16 @@ describe "Optionsful" do
 
   context "as a Rack middleware" do
 
-    it "is a Ruby object that responds to call;" do
+    it "is a Ruby object that responds to call" do
       ::Baurets::Optionsful::Server.new(app).respond_to?(:call).should be true
     end
 
-    it "takes exactly one argument, (the environment) and returns an Array;" do
+    it "takes exactly one argument, (the environment) and returns an Array" do
       response = ::Baurets::Optionsful::Server.new(app).call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
       response.should be_a_kind_of Array
     end
 
-    it "the returned Array must have exactly three values: the status, the headers and the body;" do
+    it "the returned Array must have exactly three values: the status, the headers and the body" do
       response = ::Baurets::Optionsful::Server.new(app).call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
       validate_response(response)
     end
@@ -25,7 +25,7 @@ describe "Optionsful" do
       end
     end
 
-    it "must be nice, acting somewhere on a Rack middleware stack;" do
+    it "must be nice, acting somewhere on a Rack middleware stack" do
       response = fake_opts_app.call(mock_env({"REQUEST_METHOD" => "OPTIONS", "PATH_INFO" => "/posts"}))
       validate_response(response)
       response[0].should be 204
@@ -55,14 +55,6 @@ describe "Optionsful" do
         validate_response(response)
         response[0].should be 204
         response[1]["Allow"].should include "GET"
-        response[1]["Allow"].should include "POST"
-      end
-
-      it "the index action displays a list of all posts in response of a GET request" do
-        response = http_options_request("/posts")
-        validate_response(response)
-        response[0].should be 204
-        response[1]["Allow"].should include "GET"
       end
 
       it "the new action return from a GET request an HTML form for creating a new post" do
@@ -70,6 +62,7 @@ describe "Optionsful" do
         validate_response(response)
         response[0].should be 204
         response[1]["Allow"].should include "GET"
+        response[1]["Allow"].should_not include "POST"
       end
 
       it "the create action uses POST to create a new post instance" do
@@ -172,15 +165,6 @@ describe "Optionsful" do
 
     describe "resources routing with sub-resources" do
 
-      #                      GET    /products/:product_id/sales(.:format)             {:action=>"index", :controller=>"sales"}
-      #        product_sales POST   /products/:product_id/sales(.:format)             {:action=>"create", :controller=>"sales"}
-      #     new_product_sale GET    /products/:product_id/sales/new(.:format)         {:action=>"new", :controller=>"sales"}
-      #                      GET    /products/:product_id/sales/:id(.:format)         {:action=>"show", :controller=>"sales"}
-      #                      PUT    /products/:product_id/sales/:id(.:format)         {:action=>"update", :controller=>"sales"}
-      #         product_sale DELETE /products/:product_id/sales/:id(.:format)         {:action=>"destroy", :controller=>"sales"}
-      #    edit_product_sale GET    /products/:product_id/sales/:id/edit(.:format)    {:action=>"edit", :controller=>"sales"}
-
-
       before(:all) do
         rails_app.routes.draw do
           resources :products do
@@ -203,6 +187,9 @@ describe "Optionsful" do
         validate_response(response)
         response[0].should be 204
         response[1]["Allow"].should include "GET"
+        response[1]["Allow"].should_not include "POST"
+        response[1]["Allow"].should_not include "PUT"
+        response[1]["Allow"].should_not include "DELETE"
       end
 
       it "the parent resource collection have an entry point for editing an existing entry" do
@@ -210,6 +197,9 @@ describe "Optionsful" do
         validate_response(response)
         response[0].should be 204
         response[1]["Allow"].should include "GET"
+        response[1]["Allow"].should_not include "POST"
+        response[1]["Allow"].should_not include "PUT"
+        response[1]["Allow"].should_not include "DELETE"
       end
 
       it "the parent resource collection let its entries be read, updated and deleted" do
@@ -220,7 +210,7 @@ describe "Optionsful" do
         response[1]["Allow"].should include "PUT"
         response[1]["Allow"].should include "DELETE"
       end
-      
+
       it "the parent resource collection let its sub-resource to be created, read, updated and deleted" do
         response = http_options_request("/products/123/seller")
         validate_response(response)
@@ -230,19 +220,65 @@ describe "Optionsful" do
         response[1]["Allow"].should include "PUT"
         response[1]["Allow"].should include "DELETE"
       end
-      
+
       it "the parent resource collection offers its sub-resource an entry point for creating a new entry" do
         response = http_options_request("/products/123/seller/new")
         validate_response(response)
         response[0].should be 204
         response[1]["Allow"].should include "GET"
+        response[1]["Allow"].should_not include "POST"
+        response[1]["Allow"].should_not include "PUT"
+        response[1]["Allow"].should_not include "DELETE"
       end
-      
+
       it "the parent resource collection offers its sub-resource an entry point for editing the existing entry" do
         response = http_options_request("/products/123/seller/edit")
         validate_response(response)
         response[0].should be 204
         response[1]["Allow"].should include "GET"
+        response[1]["Allow"].should_not include "POST"
+        response[1]["Allow"].should_not include "PUT"
+        response[1]["Allow"].should_not include "DELETE"
+      end
+
+      it "the sub-resource collection behaves like a common resource collection" do
+        response = http_options_request("/products/123/sales")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Allow"].should include "GET"
+        response[1]["Allow"].should include "POST"
+        response[1]["Allow"].should_not include "PUT"
+        response[1]["Allow"].should_not include "DELETE"
+      end
+
+      it "the sub-resource collection have an entry point for creating a new entry" do
+        response = http_options_request("/products/123/sales/new")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Allow"].should include "GET"
+        response[1]["Allow"].should_not include "POST"
+        response[1]["Allow"].should_not include "PUT"
+        response[1]["Allow"].should_not include "DELETE"
+      end
+
+      it "the sub-resource collection have an entry point for editing an existing entry" do
+        response = http_options_request("/products/123/sales/123/edit")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Allow"].should include "GET"
+        response[1]["Allow"].should_not include "POST"
+        response[1]["Allow"].should_not include "PUT"
+        response[1]["Allow"].should_not include "DELETE"
+      end
+
+      it "the sub-resource collection let its entries be read, updated and deleted" do
+        response = http_options_request("/products/123/sales/456")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Allow"].should include "GET"
+        response[1]["Allow"].should include "PUT"
+        response[1]["Allow"].should include "DELETE"
+        response[1]["Allow"].should_not include "POST"
       end
 
       after(:all) do
@@ -303,13 +339,12 @@ describe "Optionsful" do
           match 'products/:id' => 'catalog#view'
         end
       end
-      # TODO Keep in mind you can assign values other than :controller and :action
 
       it "a simple matching should work" do
         response = http_options_request("/products/123")
         validate_response(response)
         response[0].should be 204
-        response[1]["Allow"].should include "ANY"
+        response[1]["Allow"].should include "GET"
       end
 
       after(:all) do
@@ -330,7 +365,7 @@ describe "Optionsful" do
         response = http_options_request("/")
         validate_response(response)
         response[0].should be 204
-        response[1]["Allow"].should include "ANY"
+        response[1]["Allow"].should include "GET"
       end
 
       after(:all) do
@@ -351,7 +386,7 @@ describe "Optionsful" do
         response = http_options_request("/products/show/123.json")
         validate_response(response)
         response[0].should be 204
-        response[1]["Allow"].should include "ANY"
+        response[1]["Allow"].should include "GET"
       end
 
       after(:all) do
