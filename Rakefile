@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'rake'
+require 'fileutils'
 
 begin
   require 'jeweler'
@@ -57,5 +58,12 @@ begin
 rescue LoadError
   task :yardoc do
     abort "YARD is not available. In order to run yardoc, you must: sudo gem install yard"
+  end
+end
+
+namespace :optionsful do
+  desc "Install 'config/optionsful.yml'"
+  task :yml do
+    puts File.dirname(__FILE__)
   end
 end

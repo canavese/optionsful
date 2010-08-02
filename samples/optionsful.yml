@@ -1,0 +1,19 @@
+development:
+  link: 
+    enabled: true
+    host: auto # use current
+    path: 
+      base: /blopts
+      propagate: false
+    
+test:
+  link: 
+    enabled: true
+    host: auto # use current
+    path: 
+      base: /blopts
+      propagate: false
+
+production:
+  http: 
+    base_path: /blopts
