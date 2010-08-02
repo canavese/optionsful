@@ -4,6 +4,7 @@ require 'autotest/timestamp'
 require 'autotest/autoupdate'
 require 'autotest/once'
 require 'autotest/restart'
+require 'redgreen'
 
 Autotest::Growl::show_modified_files = true
 
@@ -12,3 +13,11 @@ Autotest.add_hook :initialize do |autotest|
     autotest.add_exception(exception)
   end
 end
+
+Autotest.add_hook :run_command do |at|
+  system "export RSPEC=true"
+  system "export AUTOFEATURE=true"
+end
+
+require 'autotest/rcov'
+Autotest::RCov.command = 'rcov_info'
