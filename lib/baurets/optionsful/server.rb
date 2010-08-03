@@ -41,18 +41,18 @@ module Baurets
         if @config.host == "auto"
           server_name = @env["SERVER_NAME"]
           server_port = @env["SERVER_PORT"]
-          link = "<http://#{server_name}:#{server_port}/"
+          link = "<http://#{server_name}:#{server_port}"
         else
           link = "<http://#{@config.host}"
         end
         unless @config.base_path.empty?
-          link += @config.base_path
+          link += @config.base_path unless @config.base_path == "/"
         end
         if @config.propagate == true
           link += @env["PATH_INFO"]
         end
         
-        link + ">; type=text/html; rel=help"
+        link += ">; type=text/html; rel=help"
         link
       end
 

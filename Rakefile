@@ -5,7 +5,7 @@ require 'fileutils'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "optionsful3"
+    gem.name = "optionsful"
     gem.summary = %Q{Support HTTP OPTIONS verb on your Rails 3 app.}
     gem.description = %Q{Help building RESTful web services by support HTTP OPTIONS verb on Ruby on Rails applications.}
     gem.email = "kayaman@baurets.net"
@@ -27,7 +27,9 @@ end
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new(:spec) do |spec|
   spec.libs << 'lib' << 'spec'
-  spec.spec_opts << '--color --format specdoc'
+  spec.spec_opts << '--color --format progress'
+  spec.verbose = true
+  spec.warning = false
   spec.spec_files = FileList['spec/**/*_spec.rb']
 end
 
@@ -61,9 +63,3 @@ rescue LoadError
   end
 end
 
-namespace :optionsful do
-  desc "Install 'config/optionsful.yml'"
-  task :yml do
-    puts File.dirname(__FILE__)
-  end
-end

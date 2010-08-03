@@ -1,5 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 include Rack::Test::Methods
+require 'fileutils'
 
 describe "Optionsful" do
 
@@ -398,38 +399,33 @@ describe "Optionsful" do
 
     describe "should not be present" do
 
-      before(:all) do
+      before(:each) do
         rails_app.routes.draw do
           resources :posts
         end
       end
 
       it "if no directions were given" do
+        FileUtils.mv File.join(Rails.root, 'config', 'optionsful.yml'), File.join(Rails.root, 'optionsful.yml')
         response = http_options_request("/posts")
+        FileUtils.mv File.join(Rails.root, 'optionsful.yml'), File.join(Rails.root, 'config', 'optionsful.yml')
         validate_response(response)
         response[0].should be 204
         response[1]["Link"].should be nil
       end
 
-      after(:all) do
+      after(:each) do
         Rails.application.reload_routes!
       end
 
     end
 
-    describe "behave arbitrarily " do
-      
+    describe "behave arbitrarily if directions were given" do
+
       before(:all) do
         rails_app.routes.draw do
           resources :posts
         end
-        
-        
-      end
-
-      it "if directions were given" do
-
-
       end
 
       it "the Link header MUST be quoted if it contains a semicolon or comma" do
