@@ -1,0 +1,18 @@
+
+development:
+  link: true
+  host: auto
+  base_path: /blopts
+  propagate: false
+    
+test:
+  link: true
+  host: auto
+  base_path: /blopts
+  propagate: false
+
+production:
+  link: true
+  host: auto
+  base_path: /blopts
+  propagate: false

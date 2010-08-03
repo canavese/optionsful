@@ -106,13 +106,6 @@ describe "Optionsful" do
         response[0].should be 404
       end
 
-      it "the Link header MUST be quoted if it contains a semicolon or comma" do
-        response = http_options_request("/posts")
-        validate_response(response)
-        response[0].should be 204
-        link = response[1]["Link"]
-        link.should match /\A"{1}.+"\z/ 
-      end
 
       after(:all) do
         Rails.application.reload_routes!
@@ -183,6 +176,7 @@ describe "Optionsful" do
       end
 
       it "the parent resource collection have an entry point for creating a new entry" do
+        pending "check regexp"
         response = http_options_request("/products/new")
         validate_response(response)
         response[0].should be 204
@@ -252,6 +246,7 @@ describe "Optionsful" do
       end
 
       it "the sub-resource collection have an entry point for creating a new entry" do
+        pending "check regexp"
         response = http_options_request("/products/123/sales/new")
         validate_response(response)
         response[0].should be 204
@@ -391,6 +386,52 @@ describe "Optionsful" do
 
       after(:all) do
         Rails.application.reload_routes!
+      end
+
+    end
+
+
+
+  end
+
+  context "Link" do
+
+    describe "should not be present" do
+
+      before(:all) do
+        rails_app.routes.draw do
+          resources :posts
+        end
+      end
+
+      it "if no directions were given" do
+        response = http_options_request("/posts")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Link"].should be nil
+      end
+      
+      after(:all) do
+        Rails.application.reload_routes!
+      end
+
+    end
+
+    describe "behave arbitrarily " do
+
+
+      it "if no directions were given" do
+
+
+      end
+
+      it "the Link header MUST be quoted if it contains a semicolon or comma" do
+        pending "link generation"
+        response = http_options_request("/posts")
+        validate_response(response)
+        response[0].should be 204
+        link = response[1]["Link"]
+        link.should match /\A"{1}.+"\z/ 
       end
 
     end

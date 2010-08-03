@@ -20,4 +20,4 @@ Autotest.add_hook :run_command do |at|
 end
 
 require 'autotest/rcov'
-Autotest::RCov.command = 'rcov_info'
+# Autotest::RCov.command = 'rcov_info'

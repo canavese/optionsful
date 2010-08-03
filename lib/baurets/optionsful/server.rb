@@ -4,25 +4,43 @@ module Baurets
 
       def initialize(app)  
         @app = app
+        @config = Config.new
       end  
 
       def call(env) 
         unless env["REQUEST_METHOD"] == "OPTIONS"
           @app.call(env)
         else
-          extract_options_information(env)
+          @env = env
+          build_response
         end
       end
 
       private
 
-      def extract_options_information(env)
-        allows = ::Baurets::Optionsful::Introspections.do_the_matches(env["PATH_INFO"])
+      def build_response
+        allows = extract_options_information
+        headers = {}
+        status = 500
+        body = ""
         unless allows.empty?
-          [204, {"Allow" => allows, "Link" => "\"<http://under.development.net\""}, ""]  
+          headers.merge!({"Allow" => allows})
+          status = 204
+          if @config.link
+            link = ""
+
+
+            headers.merge!({"Link" => link})
+          end
         else
-          [404, {}, "Not found"]
+          status = 404
+          body = "Not found"
         end
+        [status, headers, body]
+      end
+
+      def extract_options_information
+        allows = ::Baurets::Optionsful::Introspections.do_the_matches(@env["PATH_INFO"])
       end
 
     end
