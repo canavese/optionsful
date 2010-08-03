@@ -429,12 +429,11 @@ describe "Optionsful" do
       end
 
       it "the Link header MUST be quoted if it contains a semicolon or comma" do
-        pending "link tests based on yml"
         response = http_options_request("/posts")
         validate_response(response)
         response[0].should be 204
         link = response[1]["Link"]
-        link.should match /\A"{1}.+"\z/ 
+        link.should match /\A\".+\"\z/ 
       end
 
       after(:all) do
