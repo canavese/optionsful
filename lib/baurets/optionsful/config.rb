@@ -17,17 +17,14 @@ module Baurets
 
       def load_from_file(file, environment)
         config = nil
-        puts "#{file}"
         if File.exist?(file)
           require 'yaml'
-          puts "exists!"
           begin
             config = YAML::load_file(file)[environment].symbolize_keys
           rescue => e
             puts e.backtrace
           end
         end
-        puts "yaml #{config.inspect}"
         config
       end
       

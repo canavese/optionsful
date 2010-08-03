@@ -410,7 +410,7 @@ describe "Optionsful" do
         response[0].should be 204
         response[1]["Link"].should be nil
       end
-      
+
       after(:all) do
         Rails.application.reload_routes!
       end
@@ -418,20 +418,29 @@ describe "Optionsful" do
     end
 
     describe "behave arbitrarily " do
+      
+      before(:all) do
+        rails_app.routes.draw do
+          resources :posts
+        end
+      end
 
-
-      it "if no directions were given" do
+      it "if directions were given" do
 
 
       end
 
       it "the Link header MUST be quoted if it contains a semicolon or comma" do
-        pending "link generation"
+        pending "link tests based on yml"
         response = http_options_request("/posts")
         validate_response(response)
         response[0].should be 204
         link = response[1]["Link"]
         link.should match /\A"{1}.+"\z/ 
+      end
+
+      after(:all) do
+        Rails.application.reload_routes!
       end
 
     end

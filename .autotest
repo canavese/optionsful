@@ -9,7 +9,7 @@ require 'redgreen'
 Autotest::Growl::show_modified_files = true
 
 Autotest.add_hook :initialize do |autotest|
-  %w{.git .svn .hg .DS_Store ._* vendor tmp log doc}.each do |exception|
+  %w{.git .svn .hg .DS_Store ._* vendor tmp log doc coverage}.each do |exception|
     autotest.add_exception(exception)
   end
 end
@@ -19,5 +19,5 @@ Autotest.add_hook :run_command do |at|
   system "export AUTOFEATURE=true"
 end
 
-require 'autotest/rcov'
+#require 'autotest/rcov'
 # Autotest::RCov.command = 'rcov_info'
