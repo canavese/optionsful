@@ -423,6 +423,8 @@ describe "Optionsful" do
         rails_app.routes.draw do
           resources :posts
         end
+        
+        
       end
 
       it "if directions were given" do
