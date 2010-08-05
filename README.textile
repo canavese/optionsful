@@ -61,13 +61,11 @@ h2. Setting up the @Link@ header
 ** run @rake optionsful:yml@
 ** edit the 'optionsful.yml' file at your application's 'config' folder.
 * Example:
-<pre>
-development:
+<pre>development:
   link: true
   host: auto
   base_path: /api
-  propagate: true
-</pre>
+  propagate: true</pre>
 
 * Possible values and effects: (the bold values are the default ones)
 
@@ -77,7 +75,7 @@ development:
 
 ** @host@
 *** *auto*: Use the application's own address and port.
-*** <custom>: point it to another location. For instance: www.baurets.net. (Do not include http://).
+*** private.mycompany.com: point it to another location. For instance: www.baurets.net. (Do not include http://).
 
 
 ** @base_path@
@@ -91,10 +89,8 @@ development:
 
 Generated Link example:
 (link: true, host: auto)
-<pre>
-    Link: "<http://localhost:3000/api/posts/1/comments>; type=text/html; rel=help"
-</pre>
-* Note: @Allow@ and @Link@ are expected headers on a response to an HTTP OPTIONS request.
+<pre>Link: "<http://localhost:3000/api/posts/1/comments>; type=text/html; rel=help"</pre>
+* *Note*: @Allow@ and @Link@ are expected headers on a response to an HTTP OPTIONS request.
 
 h2. KNOWN ISSUES
 * Rails route recognition still need some work
