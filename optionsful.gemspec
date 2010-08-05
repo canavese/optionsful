@@ -44,10 +44,10 @@ Gem::Specification.new do |s|
      "spec/spec.opts",
      "spec/spec_helper.rb"
   ]
-  s.homepage = %q{http://github.com/kayaman/optionsful3}
+  s.homepage = %q{http://github.com/kayaman/optionsful}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubyforge_project = %q{optionsful3}
+  s.rubyforge_project = %q{optionsful}
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Support HTTP OPTIONS verb on your Rails 3 app.}
   s.test_files = [
