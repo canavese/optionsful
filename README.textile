@@ -61,11 +61,11 @@ h2. Setting up the @Link@ header
 ** run @rake optionsful:yml@
 ** edit the 'optionsful.yml' file at your application's 'config' folder.
 * Example:
-<code>development:
-  link: true
-  host: auto
-  base_path: /api
-  propagate: true</code>
+<pre>development:
+ link: true
+ host: auto
+ base_path: /api
+ propagate: true</pre>
 
 h3. Possible values and effects: (the bold values are the default ones)
 
