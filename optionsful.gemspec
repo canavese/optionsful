@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
      "lib/optionsful.rb",
      "lib/tasks/optionsful.rake",
      "optionsful.gemspec",
+     "rails/init.rb",
      "spec/config/optionsful.yml",
      "spec/config/optionsful_host_auto.yml",
      "spec/config/optionsful_link_false.yml",
