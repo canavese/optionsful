@@ -7,7 +7,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "optionsful"
     gem.summary = %Q{Support HTTP OPTIONS verb on your Rails 3 app.}
-    gem.description = %Q{Help building RESTful web services by support HTTP OPTIONS verb on Ruby on Rails applications.}
+    gem.description = %Q{Help building RESTful web services by supporting the HTTP OPTIONS verb on Ruby on Rails applications.}
     gem.email = "kayaman@baurets.net"
     gem.homepage = "http://github.com/kayaman/optionsful3"
     gem.authors = ["Marco Antonio Gonzalez Junior"]
@@ -15,6 +15,7 @@ begin
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.add_development_dependency "yard", ">= 0"
     gem.add_development_dependency "cucumber", ">= 0"
+    gem.add_dependency "rails", ">= 3.0.0"
   end
   Jeweler::GemcutterTasks.new
   Jeweler::RubyforgeTasks.new do |rubyforge|
@@ -27,7 +28,7 @@ end
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new(:spec) do |spec|
   spec.libs << 'lib' << 'spec'
-  spec.spec_opts << '--color --format progress'
+  spec.spec_opts << '--color --format specdoc'
   spec.verbose = true
   spec.warning = false
   spec.spec_files = FileList['spec/**/*_spec.rb']
