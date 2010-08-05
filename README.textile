@@ -6,6 +6,7 @@ Provide HTTP OPTIONS support for the Ruby on Rails framework.
 * Note for the dummies: change host names and paths properly.
 * Note for the unfaithful: run @rake routes@ to validate the results.
 
+** *WARNING*: If your application is Rails 2.x please go to "optionsful2":http://github.com/kayaman/optionsful2
 h1. "-No! No! No! *-Show me the code!*" 
 
 h3. Retrieving an HTTP OPTIONS request via telnet:
