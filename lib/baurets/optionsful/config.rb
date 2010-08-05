@@ -18,18 +18,14 @@ module Baurets
           end
         end
         @config = DEFAULT if @config.nil?
+        @config.merge!(options) unless options.empty?
         @config
       end
 
       def get_env
-        if defined? Rails
-          env = :test if Rails.env.test?
-          env = :development if Rails.env.development?
-          env = :production if Rails.env.production?
-        else
-          env = :development
-        end
-        env
+        :test if Rails.env.test?
+        :development if Rails.env.development?
+        :production if Rails.env.production?
       end
 
       def load_from_file(file, environment)

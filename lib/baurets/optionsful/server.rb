@@ -36,7 +36,7 @@ module Baurets
         unless allows.empty?
           headers.merge!({"Allow" => allows})
           status = 204
-          if @config.link
+          if @config.link == true
             headers.merge!({"Link" => build_link_header})
           end
         else
@@ -61,7 +61,6 @@ module Baurets
         if @config.propagate == 'true'
           link += @env["PATH_INFO"]
         end
-        
         link += ">; type=text/html; rel=help\""
         link
       end

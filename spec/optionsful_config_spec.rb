@@ -19,13 +19,12 @@ describe Baurets::Optionsful::Config do
     describe "when there is a custom config file, load the settings from it" do
       
       it "the Link header generation must be disabled" do
-        file = File.join(File.dirname(__FILE__), 'config', 'optionsful_link_false.yml')
-        config = Baurets::Optionsful::Config.new(file)
+        config = Baurets::Optionsful::Config.new()
         config.link.should be false
       end
       
       it "the Link header generation must be enabled" do
-        config = Baurets::Optionsful::Config.new(File.join(File.dirname(__FILE__), 'config', 'optionsful.yml'))
+        config = Baurets::Optionsful::Config.new(nil, {:link => true})
         config.link.should be true
       end
       

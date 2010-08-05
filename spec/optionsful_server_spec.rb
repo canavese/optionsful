@@ -403,12 +403,12 @@ describe "Optionsful" do
         rails_app.routes.draw do
           resources :posts
         end
+        ::Baurets::Optionsful::Config.new
       end
 
       it "if no directions were given" do
-        FileUtils.mv File.join(Rails.root, 'config', 'optionsful.yml'), File.join(Rails.root, 'optionsful.yml')
+        Baurets::Optionsful::Config.new(nil, {:link => false})
         response = http_options_request("/posts")
-        FileUtils.mv File.join(Rails.root, 'optionsful.yml'), File.join(Rails.root, 'config', 'optionsful.yml')
         validate_response(response)
         response[0].should be 204
         response[1]["Link"].should be nil
@@ -429,6 +429,7 @@ describe "Optionsful" do
       end
 
       it "the Link header MUST be quoted if it contains a semicolon or comma" do
+         Baurets::Optionsful::Config.new(nil, {:link => true})
         response = http_options_request("/posts")
         validate_response(response)
         response[0].should be 204

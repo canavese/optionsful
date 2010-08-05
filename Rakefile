@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'rake'
-require 'fileutils'
 
 begin
   require 'jeweler'
