@@ -1,4 +1,4 @@
-h1. *Optionsful*
+h1. *O p t i o n s f u l*
 
 Provide HTTP OPTIONS support for the Ruby on Rails framework.
 
@@ -43,7 +43,9 @@ Link: "<http://localhost:3000/api/posts/1/comments>; type=text/html; rel=help"
 </pre>
 ~Note the empty line which is part of the HTTP protocol.~
 
-h3. Telnet is the geek way. You would like better to use an HTTP client software. I use "HTTP Client":http://ditchnet.org/httpclient/ on Mac OS X.
+h3. Telnet is the geek way. 
+
+    You would like better to use an HTTP client software. I use "HTTP Client":http://ditchnet.org/httpclient/ on Mac OS X.
 
 h1. INSTALLATION:
 
