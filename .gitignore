@@ -24,4 +24,4 @@ log
 tmp
 ## PROJECT::SPECIFIC
 
-optionsful.gemspec
+#optionsful.gemspec
