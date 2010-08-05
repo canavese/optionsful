@@ -9,11 +9,12 @@ module Baurets
           @config = load_from_file(file, get_env)
         else
           begin
-            if (defined? Rails && File.exist?(File.join(Rails.root, 'config', 'optionsful.yml')))
+            if File.exist?(File.join(Rails.root, 'config', 'optionsful.yml'))
               envs = YAML::load_file(File.join(Rails.root, 'config', 'optionsful.yml')).symbolize_keys
               @config = envs[get_env].symbolize_keys
             end
-          rescue
+          rescue => e
+            # TODO Rails.logger log it
           end
         end
         @config = DEFAULT if @config.nil?
@@ -39,7 +40,7 @@ module Baurets
             envs = YAML::load_file(file).symbolize_keys
             config = envs[environment].symbolize_keys
           rescue => e
-            puts e.backtrace
+            # TODO Rails.logger log it
           end
         end
         config

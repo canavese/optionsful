@@ -2,11 +2,17 @@ module Baurets
   module Optionsful
     class Server
 
+      ## 
+      # Wakes up!
+      #
       def initialize(app)  
         @app = app
         @config = Config.new
       end  
 
+      ##
+      # Handle HTTP OPTIONS requests.
+      # 
       def call(env) 
         unless env["REQUEST_METHOD"] == "OPTIONS"
           @app.call(env)
@@ -17,6 +23,10 @@ module Baurets
       end
 
       private
+      
+      def extract_options_information
+        allows = ::Baurets::Optionsful::Introspections.do_the_matches(@env["PATH_INFO"])
+      end
 
       def build_response
         allows = extract_options_information
@@ -48,16 +58,12 @@ module Baurets
         unless @config.base_path.empty?
           link += @config.base_path unless @config.base_path == "/"
         end
-        if @config.propagate == true
+        if @config.propagate == 'true'
           link += @env["PATH_INFO"]
         end
         
         link += ">; type=text/html; rel=help\""
         link
-      end
-
-      def extract_options_information
-        allows = ::Baurets::Optionsful::Introspections.do_the_matches(@env["PATH_INFO"])
       end
 
     end
