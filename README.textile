@@ -1,0 +1,113 @@
+h1. *Optionsful*
+
+Provide HTTP OPTIONS support for the Ruby on Rails framework.
+
+* Note for the impatient: installation instructions below.
+* Note for the dummies: change host names and paths properly.
+* Note for the unfaithful: run @rake routes@ to validate the results.
+
+h1. "-No! No! No! *-Show me the code!*" 
+
+h3. Retrieving an HTTP OPTIONS request via telnet:
+
+<pre>
+  
+$ telnet localhost 3000 
+OPTIONS /posts HTTP/1.1
+Host: http://localhost:3000
+
+HTTP/1.1 204 No Content 
+Allow: GET, POST
+Connection: close
+Date: Thu, 22 Jul 2010 17:20:27 GMT
+Link: "<http://localhost:3000/api/posts>; type=text/html; rel=help"
+
+OPTIONS /posts/1 HTTP/1.1
+Host: http://localhost:3000
+
+HTTP/1.1 204 No Content 
+Allow: GET, PUT, DELETE
+Connection: close
+Date: Thu, 22 Jul 2010 18:14:24 GMT
+Link: "<http://localhost:3000/api/posts/1/>; type=text/html; rel=help"
+
+OPTIONS /posts/1/comments HTTP/1.1
+Host: http://localhost:3000
+
+HTTP/1.1 204 No Content 
+Allow: GET, POST
+Connection: close
+Date: Thu, 22 Jul 2010 18:12:43 GMT
+Link: "<http://localhost:3000/api/posts/1/comments>; type=text/html; rel=help"
+
+</pre>
+~Note the empty line which is part of the HTTP protocol.~
+
+h3. Telnet is the geek way. You would like better to use an HTTP client software. I use "HTTP Client":http://ditchnet.org/httpclient/ on Mac OS X.
+
+h1. INSTALLATION:
+
+# Change directory to your Ruby on Rails web application,
+# Add gem dependency to @config/environment.rb@:
+<pre>
+  config.gem "optionsful"
+</pre>
+# To install it, run @rake gems:install@ or:
+<pre>
+  $ gem install optionsful
+</pre>
+# Enjoy! And give feedback! :)
+
+h2. Setting up the @Link@ header
+
+* To enable and setup the response's @Link@ header, install and edit the configuration file:
+** run @rake optionsful:yml@
+** edit the 'optionsful.yml' file at your application's 'config' folder.
+* Example:
+<pre>
+  development:
+    link: true
+    host: auto
+    base_path: /api
+    propagate: true
+</pre>
+
+* Possible values and effects: (the bold values are the default ones)
+
+** @link@
+*** *false*: Do not include any "Link" header in the response.
+*** true: Do include it. Build the URI based on the 'host', 'base_path', and 'propagate' values, explained below.
+
+** @host@
+*** *auto*: Use the application's own address and port.
+*** <custom>: point it to another location. For instance: www.baurets.net. (Do not include http://).
+
+
+** @base_path@
+*** the path be appended to the host. Default is */api*. 
+*** Example: /my_company/my_project/resources/api
+
+** @propagate@
+*** false: Do not append the request's path info to the URI.
+*** *true*: Do append it, as it is. 
+
+Generated Link example:
+(link: true, host: auto)
+<pre>
+    Link: "<http://localhost:3000/api/notes>; type=text/html; rel=help"
+</pre>
+* Note: @Allow@ and @Link@ are expected headers on a response to an HTTP OPTIONS request.
+
+h2. KNOWN ISSUES
+* Rails route recognition still need some work
+* Platform: *Rails 3.0.0.rc* !!!
+
+h2. Get involved
+* Mailing list: http://groups.google.com/group/optionsful
+* Bug tracker : http://kayaman.lighthouseapp.com/projects/56438-optionsful/overview
+
+h2. CONTRIBUTORS
+* Me, myself and I, so far.
+* You are welcome, do it. ;-)
+
+Copyright (c) 2010 Marco Antonio Gonzalez Junior, kayaman@baurets.net, released under the MIT license.
