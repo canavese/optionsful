@@ -9,9 +9,9 @@ begin
     gem.summary = %Q{Support HTTP OPTIONS verb on your Rails 3 app.}
     gem.description = %Q{Help building RESTful web services by supporting the HTTP OPTIONS verb on Ruby on Rails applications.}
     gem.email = "kayaman@baurets.net"
-    gem.homepage = "http://github.com/kayaman/optionsful3"
+    gem.homepage = "http://github.com/kayaman/optionsful"
     gem.authors = ["Marco Antonio Gonzalez Junior"]
-    gem.rubyforge_project = "optionsful3"
+    gem.rubyforge_project = "optionsful"
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.add_development_dependency "yard", ">= 0"
     gem.add_development_dependency "cucumber", ">= 0"
