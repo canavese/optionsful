@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
      "lib/baurets/optionsful/introspections.rb",
      "lib/baurets/optionsful/server.rb",
      "lib/optionsful.rb",
+     "optionsful.gemspec",
      "rails/init.rb",
      "samples/optionsful.yml.sample",
      "spec/fake_app.rb",
