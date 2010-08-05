@@ -15,7 +15,7 @@ begin
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.add_development_dependency "yard", ">= 0"
     gem.add_development_dependency "cucumber", ">= 0"
-    gem.add_dependency "rails", ">= 3.0.0"
+    gem.add_dependency "rails", "= 3.0.0.rc"
   end
   Jeweler::GemcutterTasks.new
   Jeweler::RubyforgeTasks.new do |rubyforge|

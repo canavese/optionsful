@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.email = %q{kayaman@baurets.net}
   s.extra_rdoc_files = [
     "LICENSE",
+     "README.markdown",
      "README.rdoc"
   ]
   s.files = [
@@ -32,7 +33,6 @@ Gem::Specification.new do |s|
      "lib/baurets/optionsful/introspections.rb",
      "lib/baurets/optionsful/server.rb",
      "lib/optionsful.rb",
-     "lib/tasks/optionsful.rake",
      "optionsful.gemspec",
      "rails/init.rb",
      "spec/config/optionsful.yml",
@@ -65,18 +65,18 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
       s.add_development_dependency(%q<yard>, [">= 0"])
       s.add_development_dependency(%q<cucumber>, [">= 0"])
-      s.add_runtime_dependency(%q<rails>, [">= 3.0.0"])
+      s.add_runtime_dependency(%q<rails>, ["= 3.0.0.rc"])
     else
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
       s.add_dependency(%q<yard>, [">= 0"])
       s.add_dependency(%q<cucumber>, [">= 0"])
-      s.add_dependency(%q<rails>, [">= 3.0.0"])
+      s.add_dependency(%q<rails>, ["= 3.0.0.rc"])
     end
   else
     s.add_dependency(%q<rspec>, [">= 1.2.9"])
     s.add_dependency(%q<yard>, [">= 0"])
     s.add_dependency(%q<cucumber>, [">= 0"])
-    s.add_dependency(%q<rails>, [">= 3.0.0"])
+    s.add_dependency(%q<rails>, ["= 3.0.0.rc"])
   end
 end
 
