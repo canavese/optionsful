@@ -1,18 +1,20 @@
+# Optionsful custom settings
 
+# Link header configuration
 development:
   link: true
   host: auto
-  base_path: /blopts
-  propagate: false
+  base_path: /api
+  propagate: true
     
 test:
   link: true
   host: auto
-  base_path: /blopts
+  base_path: /api
   propagate: false
 
 production:
   link: true
   host: auto
-  base_path: /blopts
+  base_path: /api
   propagate: false

@@ -2,7 +2,7 @@ module Baurets
   module Optionsful
     class Config
 
-      DEFAULT = { :link => false, :host => 'auto', :base_path =>  "/optionsful", :propagate => true }
+      DEFAULT = { :link => false, :host => 'auto', :base_path =>  "/api", :propagate => true }
 
       def initialize(file = nil, options = {})
         unless file.nil?
