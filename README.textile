@@ -11,7 +11,6 @@ h1. "-No! No! No! *-Show me the code!*"
 h3. Retrieving an HTTP OPTIONS request via telnet:
 
 <pre>
-  
 $ telnet localhost 3000 
 OPTIONS /posts HTTP/1.1
 Host: http://localhost:3000
@@ -43,21 +42,17 @@ Link: "<http://localhost:3000/api/posts/1/comments>; type=text/html; rel=help"
 </pre>
 ~Note the empty line which is part of the HTTP protocol.~
 
-h3. Telnet is the geek way. 
+h3. Well, I agree. Telnet is the geekest way.. ;-) 
 
-    You would like better to use an HTTP client software. I use "HTTP Client":http://ditchnet.org/httpclient/ on Mac OS X.
+    This is for testing purposes. You would like better to use an HTTP client software. I use "HTTP Client":http://ditchnet.org/httpclient/ on Mac OS X. And on real life, There is a lot of possible usage scenarios.
 
 h1. INSTALLATION:
 
 # Change directory to your Ruby on Rails web application,
 # Add gem dependency to @config/environment.rb@:
-<pre>
-  config.gem "optionsful"
-</pre>
+<pre>config.gem "optionsful"</pre>
 # To install it, run @rake gems:install@ or:
-<pre>
-  $ gem install optionsful
-</pre>
+<pre>$ gem install optionsful</pre>
 # Enjoy! And give feedback! :)
 
 h2. Setting up the @Link@ header
@@ -67,11 +62,11 @@ h2. Setting up the @Link@ header
 ** edit the 'optionsful.yml' file at your application's 'config' folder.
 * Example:
 <pre>
-  development:
-    link: true
-    host: auto
-    base_path: /api
-    propagate: true
+development:
+  link: true
+  host: auto
+  base_path: /api
+  propagate: true
 </pre>
 
 * Possible values and effects: (the bold values are the default ones)
@@ -86,7 +81,8 @@ h2. Setting up the @Link@ header
 
 
 ** @base_path@
-*** the path be appended to the host. Default is */api*. 
+*** the path to be appended to the host. Default is */api*. 
+*** to disable it, use @/@
 *** Example: /my_company/my_project/resources/api
 
 ** @propagate@
@@ -96,7 +92,7 @@ h2. Setting up the @Link@ header
 Generated Link example:
 (link: true, host: auto)
 <pre>
-    Link: "<http://localhost:3000/api/notes>; type=text/html; rel=help"
+    Link: "<http://localhost:3000/api/posts/1/comments>; type=text/html; rel=help"
 </pre>
 * Note: @Allow@ and @Link@ are expected headers on a response to an HTTP OPTIONS request.
 
