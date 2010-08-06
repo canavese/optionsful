@@ -15,6 +15,7 @@ require 'rails'
 require 'rack' 
 require 'rack/test'
 require 'rack/lobster' 
+require 'fileutils'
 
 Spec::Runner.configure do |config|
 

@@ -21,6 +21,11 @@ module Baurets
         @config.merge!(options) unless options.empty?
         @config
       end
+      
+      def self.reset!
+        @config = DEFAULT
+        self
+      end
 
       def get_env
         :test if Rails.env.test?

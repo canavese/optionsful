@@ -1,6 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 include Rack::Test::Methods
-require 'fileutils'
 
 describe "Optionsful" do
 
@@ -435,6 +434,42 @@ describe "Optionsful" do
         response[0].should be 204
         link = response[1]["Link"]
         link.should match /\A\".+\"\z/ 
+      end
+      
+      it "the Link header may use its very current host" do
+         Baurets::Optionsful::Config.new(nil, {:link => true, :host => 'auto'})
+        response = http_options_request("/posts")
+        validate_response(response)
+        response[0].should be 204
+        link = response[1]["Link"]
+        link.should match /\A\"<http:\/\/localhost.+\"\z/ 
+      end
+      
+      it "the Link header may use a custom host value" do
+         Baurets::Optionsful::Config.new(nil, {:link => true, :host => 'www.baurets.net'})
+        response = http_options_request("/posts")
+        validate_response(response)
+        response[0].should be 204
+        link = response[1]["Link"]
+        link.should match /\A\"<http:\/\/www.baurets.net.+\"\z/ 
+      end
+      
+      it "the Link header may use a custom base path value" do
+         Baurets::Optionsful::Config.new(nil, {:link => true, :host => 'www.baurets.net', :base_path => "/private/api/"})
+        response = http_options_request("/posts")
+        validate_response(response)
+        response[0].should be 204
+        link = response[1]["Link"]
+        link.should match /\A\"<http:\/\/www.baurets.net\/private\/api\/.+\"\z/ 
+      end
+      
+      it "the Link header may propagate original path info" do
+         Baurets::Optionsful::Config.new(nil, {:link => true, :host => 'www.baurets.net', :base_path => "/private/api/", :propagate => true})
+        response = http_options_request("/posts")
+        validate_response(response)
+        response[0].should be 204
+        link = response[1]["Link"]
+        link.should match /\A\"<http:\/\/www.baurets.net\/private\/api\/\/posts.+\"\z/ 
       end
 
       after(:all) do

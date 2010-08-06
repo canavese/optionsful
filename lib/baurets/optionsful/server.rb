@@ -58,7 +58,7 @@ module Baurets
         unless @config.base_path.empty?
           link += @config.base_path unless @config.base_path == "/"
         end
-        if @config.propagate == 'true'
+        if @config.propagate == true
           link += @env["PATH_INFO"]
         end
         link += ">; type=text/html; rel=help\""
