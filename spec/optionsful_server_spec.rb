@@ -176,7 +176,6 @@ describe "Optionsful" do
       end
 
       it "the parent resource collection have an entry point for creating a new entry" do
-        pending "check regexp"
         response = http_options_request("/products/new")
         validate_response(response)
         response[0].should be 204
@@ -246,7 +245,6 @@ describe "Optionsful" do
       end
 
       it "the sub-resource collection have an entry point for creating a new entry" do
-        pending "check regexp"
         response = http_options_request("/products/123/sales/new")
         validate_response(response)
         response[0].should be 204
@@ -390,11 +388,9 @@ describe "Optionsful" do
 
     end
 
-
-
   end
 
-  context "Link" do
+  context "the Link header" do
 
     describe "should not be present" do
 

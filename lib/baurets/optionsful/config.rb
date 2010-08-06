@@ -8,20 +8,17 @@ module Baurets
         unless file.nil?
           @config = load_from_file(file, get_env)
         else
-          begin
-            if File.exist?(File.join(Rails.root, 'config', 'optionsful.yml'))
-              envs = YAML::load_file(File.join(Rails.root, 'config', 'optionsful.yml')).symbolize_keys
-              @config = envs[get_env].symbolize_keys
-            end
-          rescue => e
-            # TODO Rails.logger log it
+          if File.exist?(File.join(Rails.root, 'config', 'optionsful.yml'))
+            envs = YAML::load_file(File.join(Rails.root, 'config', 'optionsful.yml')).symbolize_keys
+            @config = envs[get_env].symbolize_keys unless envs[get_env].nil?
           end
+
         end
         @config = DEFAULT if @config.nil?
         @config.merge!(options) unless options.empty?
         @config
       end
-      
+
       def self.reset!
         @config = DEFAULT
         self
@@ -37,12 +34,8 @@ module Baurets
         config = nil
         require 'yaml'
         if File.exist?(file)
-          begin
-            envs = YAML::load_file(file).symbolize_keys
-            config = envs[environment].symbolize_keys
-          rescue => e
-            # TODO Rails.logger log it
-          end
+          envs = YAML::load_file(file).symbolize_keys
+          config = envs[environment].symbolize_keys unless envs[environment].nil?
         end
         config
       end
