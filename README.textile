@@ -57,7 +57,7 @@ h1. INSTALLATION:
 <pre>class Application < Rails::Application
   config.middleware.use ::Baurets::Optionsful::Server
   ...</pre>
-# To install it, run @rake gems:install@ or:
+# To install it, run @bundle install@ or:
 <pre>$ gem install optionsful</pre>
 # Enjoy! And give feedback! :)
 
