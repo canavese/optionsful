@@ -1,3 +1,6 @@
+
+require 'yaml'
+
 module Baurets
   module Optionsful
     class Config
@@ -5,23 +8,14 @@ module Baurets
       DEFAULT = { :link => false, :host => 'auto', :base_path =>  "/api", :propagate => true }
 
       def initialize(file = nil, options = {})
-        unless file.nil?
-          @config = load_from_file(file, get_env)
-        else
-          if File.exist?(File.join(Rails.root, 'config', 'optionsful.yml'))
-            envs = YAML::load_file(File.join(Rails.root, 'config', 'optionsful.yml')).symbolize_keys
-            @config = envs[get_env].symbolize_keys unless envs[get_env].nil?
-          end
-
+        if file.nil?
+          file = File.join(Rails.root, 'config', 'optionsful.yml')
         end
-        @config = DEFAULT if @config.nil?
-        @config.merge!(options) unless options.empty?
-        @config
-      end
-
-      def self.reset!
-        @config = DEFAULT
-        self
+        config = load_yaml(file, get_env)
+        config = DEFAULT if config.nil? or config.empty?
+        config.merge!(options) unless options.empty?
+        @config = config
+        config
       end
 
       def get_env
@@ -30,20 +24,26 @@ module Baurets
         :production if Rails.env.production?
       end
 
-      def load_from_file(file, environment)
+      def load_yaml(file, environment)
         config = nil
-        require 'yaml'
         if File.exist?(file)
-          envs = YAML::load_file(file).symbolize_keys
-          config = envs[environment].symbolize_keys unless envs[environment].nil?
+          begin
+            envs = YAML::load_file(file)
+            raise "Could not parse the YAML." if (envs.empty? or (not envs.kind_of?(Hash)))
+            envs = envs.symbolize_keys if envs
+            config = envs[environment].symbolize_keys if (envs && envs[environment])
+          rescue
+            config = nil
+          end
+          config
         end
-        config
+
       end
 
-      def method_missing(name, *args)
-        return @config[name.to_sym] 
-      end
-
+    def method_missing(name, *args)
+      return @config[name.to_sym] 
     end
+
   end
+end
 end
