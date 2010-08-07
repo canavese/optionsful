@@ -51,7 +51,7 @@ h3. Well, I agree. Telnet is the geekest way.. ;-)
 h1. INSTALLATION:
 
 # Change directory to your Ruby on Rails web application,
-# Add gem dependency to @config/environment.rb@:
+# Add gem dependency to @config/application.rb@:
 <pre>config.gem "optionsful"</pre>
 # To install it, run @rake gems:install@ or:
 <pre>$ gem install optionsful</pre>
