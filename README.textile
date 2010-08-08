@@ -10,6 +10,7 @@ Provide HTTP OPTIONS support for the Ruby on Rails framework.
 
 h1. "-No! No! No! *-Show me the code!*" 
 h2. Playing HTTP OPTIONS via telnet:
+
 <pre>
 $ telnet localhost 3000 
 OPTIONS /posts HTTP/1.1
