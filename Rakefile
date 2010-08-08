@@ -6,7 +6,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "optionsful"
     gem.summary = %Q{Support HTTP OPTIONS verb on your Rails 3 app.}
-    gem.description = %Q{Help building RESTful web services by supporting the HTTP OPTIONS verb on Ruby on Rails applications.}
+    gem.description = %Q{Build RESTful web services supporting the HTTP OPTIONS verb on Ruby on Rails applications.}
     gem.email = "kayaman@baurets.net"
     gem.homepage = "http://github.com/kayaman/optionsful"
     gem.authors = ["Marco Antonio Gonzalez Junior"]
