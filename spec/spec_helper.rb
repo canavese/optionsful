@@ -97,5 +97,5 @@ DEFAULT_ENV = { "rack.version" => Rack::VERSION, "rack.input" => StringIO.new, "
     end
     
     def simulate_rake_yml_task
-      FileUtils.cp File.join(Rails.root, 'samples', 'optionsful.yml.sample'), File.join(Rails.root, 'config', 'optionsful.yml')      
+      FileUtils.cp File.join(Rails.root, 'samples', 'optionsful.yml'), File.join(Rails.root, 'config', 'optionsful.yml')      
     end

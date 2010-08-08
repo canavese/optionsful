@@ -41,7 +41,7 @@ module Baurets
           end
         else
           status = 404
-          body = "Not found"
+          body = "Not found."
         end
         [status, headers, body]
       end
