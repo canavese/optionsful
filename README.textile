@@ -9,9 +9,7 @@ Provide HTTP OPTIONS support for the Ruby on Rails framework.
 ** *WARNING*: If your application is Rails 2.x please go to "optionsful2":http://github.com/kayaman/optionsful2
 
 h1. "-No! No! No! *-Show me the code!*" 
-
-h2. Retrieving an HTTP OPTIONS request via telnet:
-
+h2. Playing HTTP OPTIONS via telnet:
 <pre>
 $ telnet localhost 3000 
 OPTIONS /posts HTTP/1.1
@@ -87,12 +85,15 @@ h2. Possible values and effects: (the underline values are the default ones)
 
 * @host@
 ** [+auto+]: Use the application's own address and port.
-** private.mycompany.com: point it to another location. For instance: www.baurets.net. (Do not include http://).
+** custom URI: point it to another location
+*** Example: www.baurets.net
+*** *Note: do not include 'http://'*
 
 * @base_path@
-** the path to be appended to the host. Default is [+*/api*+]. 
-** to disable it, use @/@
-** Example: /my_company/my_project/resources/api
+** the path to be appended to the host. 
+*** Default is [+*/api*+]. 
+*** To disable it, use @/@
+*** Example: /my_company_private_area/our_big_project/resources/api
 
 * @propagate@
 ** false: Do not append the request's path info to the URI.
