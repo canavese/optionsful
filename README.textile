@@ -1,4 +1,4 @@
-h1. *O p t i o n s f u l*
+h1. [+*O p t i o n s f u l*+]
 
 Provide HTTP OPTIONS support for the Ruby on Rails framework.
 
@@ -10,7 +10,7 @@ Provide HTTP OPTIONS support for the Ruby on Rails framework.
 
 h1. "-No! No! No! *-Show me the code!*" 
 
-h3. Retrieving an HTTP OPTIONS request via telnet:
+h2. Retrieving an HTTP OPTIONS request via telnet:
 
 <pre>
 $ telnet localhost 3000 
@@ -42,7 +42,7 @@ Date: Thu, 22 Jul 2010 18:12:43 GMT
 Link: "<http://localhost:3000/api/posts/1/comments>; type=text/html; rel=help"
 
 </pre>
-~Note the empty line which is part of the HTTP protocol.~
+~*Note the empty line which is part of the HTTP protocol.*~
 
 h3. I agree. Telnet is the geekest way.. ;-) 
 
@@ -52,7 +52,7 @@ h3. I agree. Telnet is the geekest way.. ;-)
 
 h1. INSTALLATION:
 
-# Change directory to your Ruby on Rails web application,
+# Change directory to your Ruby on Rails web application
 # Add gem dependency to @Gemfile@:
 <pre>gem 'optionsful'</pre>
 # Add it to the stack at @config/application.rb@:
@@ -62,6 +62,8 @@ h1. INSTALLATION:
 # To install it, run @bundle install@ or:
 <pre>$ gem install optionsful</pre>
 # Enjoy! And give feedback! :)
+
+h1. CONFIGURATION
 
 h2. Setting up the @Link@ header
 
@@ -75,28 +77,29 @@ h2. Setting up the @Link@ header
  base_path: /api
  propagate: true</pre>
 
-h3. Possible values and effects: (the bold values are the default ones)
+h2. Possible values and effects: (the underline values are the default ones)
 
 * @link@
-** *false*: Do not include any "Link" header in the response.
-** true: Do include it. Build the URI based on the 'host', 'base_path', and 'propagate' values, explained below.
+** [+false+]: Do not include the "Link" in the response headers. 
+*** some other settings are then ignored
+** true: Do include it! 
+*** build the *URI* based on the *host*, *base_path*, and *propagate* values, explained below.
 
 * @host@
-** *auto*: Use the application's own address and port.
+** [+auto+]: Use the application's own address and port.
 ** private.mycompany.com: point it to another location. For instance: www.baurets.net. (Do not include http://).
 
-
 * @base_path@
-** the path to be appended to the host. Default is */api*. 
+** the path to be appended to the host. Default is [+*/api*+]. 
 ** to disable it, use @/@
 ** Example: /my_company/my_project/resources/api
 
 * @propagate@
 ** false: Do not append the request's path info to the URI.
-** *true*: Do append it, as it is. 
+** [+true+]: Do append it, as it is. 
 
 * Generated Link example:
-(*link: true*, *host: auto*)
+  (*link: true*, *host: auto*, *base_path: /api*, *propagate: true*)
 <pre>Link: "<http://localhost:3000/api/posts/1/comments>; type=text/html; rel=help"</pre>
 
 * *Note*: @Allow@ *and* @Link@ *are expected headers on a response to an HTTP OPTIONS request.*
@@ -109,7 +112,6 @@ h2. Development notes
 
 * To bleed on the edge, at your Rails 3 application's @Gemfile@:
 <pre>gem 'optionsful', :path => "~/your_workspace/optionsful/"</pre>
-
 
 h2. Get involved
 * Mailing list: http://groups.google.com/group/optionsful
