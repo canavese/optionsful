@@ -81,3 +81,21 @@ DEFAULT_ENV = { "rack.version" => Rack::VERSION, "rack.input" => StringIO.new, "
       app = FakeApp.initialize!
       app
     end
+    
+    def configuration
+      configurator = Baurets::Optionsful::Configurator.new
+      configuration = configurator.configure!
+      configuration
+    end
+    
+    def delete_configuration_file
+      FileUtils.rm [File.join(Rails.root, 'config', 'optionsful.yml')] if File.exist? File.join(Rails.root, 'config', 'optionsful.yml')
+    end
+    
+    def copy_configuration_file(name)
+      FileUtils.cp File.join(Rails.root, 'samples', name), File.join(Rails.root, 'config', 'optionsful.yml')
+    end
+    
+    def simulate_rake_yml_task
+      FileUtils.cp File.join(Rails.root, 'samples', 'optionsful.yml.sample'), File.join(Rails.root, 'config', 'optionsful.yml')      
+    end

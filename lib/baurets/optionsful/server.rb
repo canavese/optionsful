@@ -7,7 +7,7 @@ module Baurets
       #
       def initialize(app)  
         @app = app
-        @config = Config.new
+        @config = Configurator.new.configure!
       end  
 
       ##
@@ -36,7 +36,7 @@ module Baurets
         unless allows.empty?
           headers.merge!({"Allow" => allows})
           status = 204
-          if @config.link == true
+          if @config[:link] == true
             headers.merge!({"Link" => build_link_header})
           end
         else
@@ -48,17 +48,17 @@ module Baurets
       
       def build_link_header
         link = ""
-        if @config.host == "auto"
+        if @config[:host] == "auto"
           server_name = @env["SERVER_NAME"]
           server_port = @env["SERVER_PORT"]
           link = "\"<http://#{server_name}:#{server_port}"
         else
-          link = "\"<http://#{@config.host}"
+          link = "\"<http://#{@config[:host]}"
         end
-        unless @config.base_path.empty?
-          link += @config.base_path unless @config.base_path == "/"
+        unless @config[:base_path].empty?
+          link += @config[:base_path] unless @config[:base_path] == "/"
         end
-        if @config.propagate == true
+        if @config[:propagate] == true
           link += @env["PATH_INFO"]
         end
         link += ">; type=text/html; rel=help\""

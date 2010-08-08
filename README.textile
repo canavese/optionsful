@@ -44,9 +44,11 @@ Link: "<http://localhost:3000/api/posts/1/comments>; type=text/html; rel=help"
 </pre>
 ~Note the empty line which is part of the HTTP protocol.~
 
-h3. Well, I agree. Telnet is the geekest way.. ;-) 
+h3. I agree. Telnet is the geekest way.. ;-) 
 
-    This is for testing purposes. You would like better to use an HTTP client software. I use "HTTP Client":http://ditchnet.org/httpclient/ on Mac OS X. And on real life, There is a lot of possible usage scenarios.
+    For testing purposes you would like better using an HTTP client software. 
+    I use "HTTP Client":http://ditchnet.org/httpclient/ on my Mac OS X and "cURL":http://curl.haxx.se/ anywhere else.
+    And on real life, you are free to create your own usage scenario.
 
 h1. INSTALLATION:
 
@@ -75,28 +77,29 @@ h2. Setting up the @Link@ header
 
 h3. Possible values and effects: (the bold values are the default ones)
 
-** @link@
-*** *false*: Do not include any "Link" header in the response.
-*** true: Do include it. Build the URI based on the 'host', 'base_path', and 'propagate' values, explained below.
+* @link@
+** *false*: Do not include any "Link" header in the response.
+** true: Do include it. Build the URI based on the 'host', 'base_path', and 'propagate' values, explained below.
 
-** @host@
-*** *auto*: Use the application's own address and port.
-*** private.mycompany.com: point it to another location. For instance: www.baurets.net. (Do not include http://).
+* @host@
+** *auto*: Use the application's own address and port.
+** private.mycompany.com: point it to another location. For instance: www.baurets.net. (Do not include http://).
 
 
-** @base_path@
-*** the path to be appended to the host. Default is */api*. 
-*** to disable it, use @/@
-*** Example: /my_company/my_project/resources/api
+* @base_path@
+** the path to be appended to the host. Default is */api*. 
+** to disable it, use @/@
+** Example: /my_company/my_project/resources/api
 
-** @propagate@
-*** false: Do not append the request's path info to the URI.
-*** *true*: Do append it, as it is. 
+* @propagate@
+** false: Do not append the request's path info to the URI.
+** *true*: Do append it, as it is. 
 
-Generated Link example:
-(link: true, host: auto)
+* Generated Link example:
+(*link: true*, *host: auto*)
 <pre>Link: "<http://localhost:3000/api/posts/1/comments>; type=text/html; rel=help"</pre>
-* *Note*: @Allow@ and @Link@ are expected headers on a response to an HTTP OPTIONS request.
+
+* *Note*: @Allow@ *and* @Link@ *are expected headers on a response to an HTTP OPTIONS request.*
 
 h2. KNOWN ISSUES
 * Rails route recognition still need some work

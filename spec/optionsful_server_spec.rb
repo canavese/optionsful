@@ -398,11 +398,10 @@ describe "Optionsful" do
         rails_app.routes.draw do
           resources :posts
         end
-        ::Baurets::Optionsful::Config.new
+        delete_configuration_file
       end
 
       it "if no directions were given" do
-        Baurets::Optionsful::Config.new(nil, {:link => false})
         response = http_options_request("/posts")
         validate_response(response)
         response[0].should be 204
@@ -421,51 +420,60 @@ describe "Optionsful" do
         rails_app.routes.draw do
           resources :posts
         end
+        delete_configuration_file
+      end
+
+      before(:each) do
+        delete_configuration_file
       end
 
       it "the Link header MUST be quoted if it contains a semicolon or comma" do
-         Baurets::Optionsful::Config.new(nil, {:link => true})
+        copy_configuration_file('optionsful_true.yml')
         response = http_options_request("/posts")
         validate_response(response)
         response[0].should be 204
         link = response[1]["Link"]
         link.should match /\A\".+\"\z/ 
       end
-      
+
       it "the Link header may use its very current host" do
-         Baurets::Optionsful::Config.new(nil, {:link => true, :host => 'auto'})
+        copy_configuration_file('optionsful_true.yml')
         response = http_options_request("/posts")
         validate_response(response)
         response[0].should be 204
         link = response[1]["Link"]
         link.should match /\A\"<http:\/\/localhost.+\"\z/ 
       end
-      
+
       it "the Link header may use a custom host value" do
-         Baurets::Optionsful::Config.new(nil, {:link => true, :host => 'www.baurets.net'})
+        copy_configuration_file('optionsful_true_custom.yml')
         response = http_options_request("/posts")
         validate_response(response)
         response[0].should be 204
         link = response[1]["Link"]
         link.should match /\A\"<http:\/\/www.baurets.net.+\"\z/ 
       end
-      
+
       it "the Link header may use a custom base path value" do
-         Baurets::Optionsful::Config.new(nil, {:link => true, :host => 'www.baurets.net', :base_path => "/private/api/"})
+        copy_configuration_file('optionsful_true_custom_base_path.yml')
         response = http_options_request("/posts")
         validate_response(response)
         response[0].should be 204
         link = response[1]["Link"]
-        link.should match /\A\"<http:\/\/www.baurets.net\/private\/api\/.+\"\z/ 
+        link.should match /\A\"<http:\/\/www.baurets.net\/private\/api.+\"\z/ 
       end
-      
+
       it "the Link header may propagate original path info" do
-         Baurets::Optionsful::Config.new(nil, {:link => true, :host => 'www.baurets.net', :base_path => "/private/api/", :propagate => true})
+        copy_configuration_file('optionsful_true_custom_propagate.yml')
         response = http_options_request("/posts")
         validate_response(response)
         response[0].should be 204
         link = response[1]["Link"]
-        link.should match /\A\"<http:\/\/www.baurets.net\/private\/api\/\/posts.+\"\z/ 
+        link.should match /\A\"<http:\/\/www.baurets.net\/api\/posts.+\"\z/ 
+      end
+
+      after(:each) do
+        delete_configuration_file
       end
 
       after(:all) do
