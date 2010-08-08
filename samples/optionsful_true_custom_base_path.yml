@@ -3,8 +3,8 @@ development:
     
 test: &test
   link: true
-  host: auto
-  base_path: /api
+  host: www.baurets.net
+  base_path: /private/api
   propagate: false
 
 production:

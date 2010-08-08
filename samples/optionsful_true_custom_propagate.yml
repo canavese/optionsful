@@ -3,9 +3,9 @@ development:
     
 test: &test
   link: true
-  host: auto
+  host: www.baurets.net
   base_path: /api
-  propagate: false
+  propagate: true
 
 production:
   <<: *test
