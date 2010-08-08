@@ -9,6 +9,7 @@ Provide HTTP OPTIONS support for the Ruby on Rails framework.
 ** *WARNING*: If your application is Rails 2.x please go to "optionsful2":http://github.com/kayaman/optionsful2
 
 h1. "-No! No! No! *-Show me the code!*" 
+
 h2. Playing HTTP OPTIONS via telnet:
 
 <pre>
