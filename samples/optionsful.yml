@@ -1,0 +1,13 @@
+# Optionsful custom settings
+
+development: &default
+  link: false
+  host: auto
+  base_path: /api
+  propagate: true
+
+test:
+  <<: *default
+
+production:
+  <<: *default
