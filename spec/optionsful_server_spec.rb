@@ -366,6 +366,27 @@ describe "Optionsful" do
       end
 
     end
+    
+    describe "route globbing" do
+
+      before(:all) do
+        rails_app.routes.draw do
+          match 'photos/*other' => 'photos#unknown' 
+        end
+      end
+
+      it "should work" do
+        response = http_options_request("/photos/chick/show/123.json")
+        validate_response(response)
+        response[0].should be 204
+        response[1]["Allow"].should include "GET"
+      end
+
+      after(:all) do
+        Rails.application.reload_routes!
+      end
+
+    end
 
     describe "the legacy 'WILD' controller" do
 
