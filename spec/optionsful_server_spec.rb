@@ -106,7 +106,6 @@ describe "Optionsful" do
         response[0].should be 404
       end
 
-
       after(:all) do
         Rails.application.reload_routes!
       end
@@ -291,7 +290,7 @@ describe "Optionsful" do
         end
       end
 
-      it "blah" do
+      it "a full flavour should work" do
         response = http_options_request("/products/123/sales/recent.xml")
         validate_response(response)
         response[0].should be 204
@@ -354,7 +353,7 @@ describe "Optionsful" do
         end
       end
 
-      it " / should work" do
+      it "'/' should work" do
         response = http_options_request("/")
         validate_response(response)
         response[0].should be 204
@@ -388,7 +387,7 @@ describe "Optionsful" do
 
     end
 
-    describe "the legacy 'WILD' controller" do
+    describe "the legacy 'wild' controller" do
 
       before(:all) do
         rails_app.routes.draw do
@@ -413,7 +412,7 @@ describe "Optionsful" do
 
   context "the Link header" do
 
-    describe "should not be present" do
+    describe "should NOT be present" do
 
       before(:each) do
         rails_app.routes.draw do
@@ -422,7 +421,7 @@ describe "Optionsful" do
         delete_configuration_file
       end
 
-      it "if no directions were given" do
+      it "if NO directions were given" do
         response = http_options_request("/posts")
         validate_response(response)
         response[0].should be 204
@@ -457,7 +456,7 @@ describe "Optionsful" do
         link.should match /\A\".+\"\z/ 
       end
 
-      it "the Link header may use its very current host" do
+      it "the Link header MAY use its very current host" do
         copy_configuration_file('optionsful_true.yml')
         response = http_options_request("/posts")
         validate_response(response)
@@ -466,7 +465,7 @@ describe "Optionsful" do
         link.should match /\A\"<http:\/\/localhost.+\"\z/ 
       end
 
-      it "the Link header may use a custom host value" do
+      it "the Link header MAY use a custom host value" do
         copy_configuration_file('optionsful_true_custom.yml')
         response = http_options_request("/posts")
         validate_response(response)
@@ -475,7 +474,7 @@ describe "Optionsful" do
         link.should match /\A\"<http:\/\/www.baurets.net.+\"\z/ 
       end
 
-      it "the Link header may use a custom base path value" do
+      it "the Link header MAY use a custom base path value" do
         copy_configuration_file('optionsful_true_custom_base_path.yml')
         response = http_options_request("/posts")
         validate_response(response)
@@ -484,7 +483,7 @@ describe "Optionsful" do
         link.should match /\A\"<http:\/\/www.baurets.net\/private\/api.+\"\z/ 
       end
 
-      it "the Link header may propagate original path info" do
+      it "the Link header MAY propagate original path info" do
         copy_configuration_file('optionsful_true_custom_propagate.yml')
         response = http_options_request("/posts")
         validate_response(response)
