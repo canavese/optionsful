@@ -18,11 +18,7 @@ module Baurets
         allow = ""
         gimme_routes.each do |route|
           if path_info =~ route.conditions[:path_info] 
-            if route.verb
-              allow += (route.verb.to_s.upcase + "|") unless allow.include?(route.verb.to_s.upcase)
-            else
-              allow = "GET" # TODO Return 'ANY' doesn't sound ANY good to me.. ;p
-            end
+              allow = "GET" # TODO Return 'ANY' doesn't sound ANY good to me.. 
           end
         end
         allow = allow.split("|").join(", ")
