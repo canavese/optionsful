@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Marco Antonio Gonzalez Junior"]
-  s.date = %q{2010-08-27}
+  s.date = %q{2010-08-30}
   s.description = %q{Build RESTful web services supporting the HTTP OPTIONS verb on Ruby on Rails applications.}
   s.email = %q{kayaman@baurets.net}
   s.extra_rdoc_files = [
@@ -67,18 +67,18 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
       s.add_development_dependency(%q<yard>, [">= 0"])
       s.add_development_dependency(%q<cucumber>, [">= 0"])
-      s.add_runtime_dependency(%q<rails>, ["= 3.0.0.rc2"])
+      s.add_runtime_dependency(%q<rails>, ["= 3.0.0"])
     else
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
       s.add_dependency(%q<yard>, [">= 0"])
       s.add_dependency(%q<cucumber>, [">= 0"])
-      s.add_dependency(%q<rails>, ["= 3.0.0.rc2"])
+      s.add_dependency(%q<rails>, ["= 3.0.0"])
     end
   else
     s.add_dependency(%q<rspec>, [">= 1.2.9"])
     s.add_dependency(%q<yard>, [">= 0"])
     s.add_dependency(%q<cucumber>, [">= 0"])
-    s.add_dependency(%q<rails>, ["= 3.0.0.rc2"])
+    s.add_dependency(%q<rails>, ["= 3.0.0"])
   end
 end
 
