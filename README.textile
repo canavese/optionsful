@@ -109,7 +109,6 @@ h2. Possible values and effects: (the underline values are the default ones)
 
 h2. KNOWN ISSUES
 * Rails route recognition still need some work
-* Platform: *Rails 3.0.0.rc* !!!
 
 h2. Development notes
 
