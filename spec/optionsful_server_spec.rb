@@ -413,6 +413,10 @@ describe "Optionsful" do
   context "the Link header" do
 
     describe "should NOT be present" do
+      
+      before(:all) do
+        backup_configuration_file
+      end
 
       before(:each) do
         rails_app.routes.draw do
@@ -431,6 +435,10 @@ describe "Optionsful" do
       after(:each) do
         Rails.application.reload_routes!
       end
+      
+      after(:all) do
+        restore_configuration_file
+      end
 
     end
 
@@ -440,7 +448,7 @@ describe "Optionsful" do
         rails_app.routes.draw do
           resources :posts
         end
-        delete_configuration_file
+        backup_configuration_file
       end
 
       before(:each) do
@@ -492,12 +500,9 @@ describe "Optionsful" do
         link.should match /\A\"<http:\/\/www.baurets.net\/api\/posts.+\"\z/ 
       end
 
-      after(:each) do
-        delete_configuration_file
-      end
-
       after(:all) do
         Rails.application.reload_routes!
+        restore_configuration_file
       end
 
     end

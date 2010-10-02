@@ -8,7 +8,11 @@ describe Baurets::Optionsful::Configurator do
 
     describe "if no directions were explicitly given, act as using the default settings" do
       
-      before do
+      before(:all) do
+        backup_configuration_file
+      end
+      
+      before(:each) do
         delete_configuration_file
       end
 
@@ -16,12 +20,20 @@ describe Baurets::Optionsful::Configurator do
         configuration[:link].should be false
       end
 
+      after(:all) do
+        restore_configuration_file
+      end
+
     end
 
     describe "when there is a custom configuration file, load the settings from it" do
+      
+      before(:all) do
+        backup_configuration_file
+      end
 
       before(:each) do
-        FileUtils.rm [File.join(Rails.root, 'config', 'optionsful.yml')] if File.exist? File.join(Rails.root, 'config', 'optionsful.yml')
+        delete_configuration_file
       end
 
       it "by default, the Link header generation must be disabled" do
@@ -57,7 +69,7 @@ describe Baurets::Optionsful::Configurator do
       end
 
       after(:all) do
-        FileUtils.rm [File.join(Rails.root, 'config', 'optionsful.yml')] if File.exist? File.join(Rails.root, 'config', 'optionsful.yml')
+        restore_configuration_file
       end
 
     end

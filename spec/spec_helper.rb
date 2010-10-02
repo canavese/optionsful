@@ -92,6 +92,16 @@ DEFAULT_ENV = { "rack.version" => Rack::VERSION, "rack.input" => StringIO.new, "
       FileUtils.rm [File.join(Rails.root, 'config', 'optionsful.yml')] if File.exist? File.join(Rails.root, 'config', 'optionsful.yml')
     end
     
+    def backup_configuration_file
+      FileUtils.cp File.join(Rails.root, 'config', 'optionsful.yml'), File.join(Rails.root, 'config', 'optionsful.yml.tmp') if File.exist? File.join(Rails.root, 'config', 'optionsful.yml')
+      FileUtils.rm [File.join(Rails.root, 'config', 'optionsful.yml')] 
+    end
+    
+    def restore_configuration_file
+      FileUtils.cp File.join(Rails.root, 'config', 'optionsful.yml.tmp'), File.join(Rails.root, 'config', 'optionsful.yml') if File.exist? File.join(Rails.root, 'config', 'optionsful.yml.tmp')
+      FileUtils.rm [File.join(Rails.root, 'config', 'optionsful.yml.tmp')] if File.exist? File.join(Rails.root, 'config', 'optionsful.yml.tmp')
+    end
+    
     def copy_configuration_file(name)
       FileUtils.cp File.join(Rails.root, 'samples', name), File.join(Rails.root, 'config', 'optionsful.yml')
     end
