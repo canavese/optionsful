@@ -72,10 +72,10 @@ h2. Setting up the @Link@ header
 ** edit the 'optionsful.yml' file at your application's 'config' folder.
 * Example:
 <pre>development:
- link: true
- host: auto
- base_path: /api
- propagate: true</pre>
+	link: true
+	host: auto
+	base_path: /api
+	propagate: true</pre>
 
 h2. Possible values and effects: (the underline values are the default ones)
 
