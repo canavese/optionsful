@@ -110,21 +110,20 @@ h2. Possible values and effects: (the underlined values are the default ones)
 h2. KNOWN ISSUES
 * Rails route recognition still need some work
 
-h2. Development notes
-
-* To bleed on the edge, at your Rails 3 application's @Gemfile@:
-<pre>gem 'optionsful', :path => "~/your_workspace/optionsful/"</pre>
-
 h2. Developer notes
 
-TODO: check dependencies.
-
 <pre>
-  $ cd your_workspace
+  $ cd ~/your_workspace
   $ git clone git@github.com:kayaman/optionsful.git
   $ cd optionsful
   $ rake	
-</pre>	
+</pre>
+
+* To bleed on the edge, add at your Rails 3 application's @Gemfile@:
+<pre>gem 'optionsful', :path => "~/your_workspace/optionsful/"</pre>
+
+* TODO: check dependencies.
+
 
 h2. Get involved
 * Mailing list: http://groups.google.com/group/optionsful
