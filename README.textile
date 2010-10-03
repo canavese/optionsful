@@ -77,7 +77,7 @@ h2. Setting up the @Link@ header
 	base_path: /api
 	propagate: true</pre>
 
-h2. Possible values and effects: (the underline values are the default ones)
+h2. Possible values and effects: (the underlined values are the default ones)
 
 * @link@
 ** [+false+]: Do not include the "Link" in the response headers. 
