@@ -63,7 +63,7 @@ h1. INSTALLATION:
 <pre>$ gem install optionsful</pre>
 # Enjoy! And give feedback! :)
 
-h1. CONFIGURATION
+h1. CONFIGURATION:
 
 h2. Setting up the @Link@ header
 
