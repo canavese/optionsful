@@ -128,6 +128,11 @@ h2. Developer notes
 
 * TODO: check dependencies.
 
+h2. TODOs
+
+* RSpec 2.0 => http://github.com/rspec/rspec-core/blob/master/Upgrade.markdown
+* spec_helper allow_only(headers, *method)
+
 
 h2. Get involved
 * Mailing list: http://groups.google.com/group/optionsful

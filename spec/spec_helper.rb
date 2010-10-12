@@ -6,8 +6,8 @@ require 'optionsful'
 require 'server'
 require 'introspections'
 
-require 'spec'
-require 'spec/autorun'
+require 'rspec'
+
 require 'fake_app'
 require 'rubygems'
 
@@ -17,7 +17,7 @@ require 'rack/test'
 require 'rack/lobster' 
 require 'fileutils'
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
 
 end
 
