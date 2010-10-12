@@ -49,12 +49,19 @@ describe "Optionsful" do
           resources :posts
         end
       end
+      
+      it "the /posts should allow GET and POST requests" do
+        response = http_options_request("/posts")
+        validate_response(response)
+        response[0].should be 204
+        should_allow(response[1], "GET", "POST")
+      end
 
       it "the index action displays a list of all posts in response of a GET request" do
         response = http_options_request("/posts")
         validate_response(response)
         response[0].should be 204
-        response[1]["Allow"].should include "GET"
+        should_allow(response[1], "GET")
       end
 
       it "the new action return from a GET request an HTML form for creating a new post" do
@@ -62,7 +69,6 @@ describe "Optionsful" do
         validate_response(response)
         response[0].should be 204
         response[1]["Allow"].should include "GET"
-        response[1]["Allow"].should_not include "POST"
       end
 
       it "the create action uses POST to create a new post instance" do
@@ -70,6 +76,13 @@ describe "Optionsful" do
         validate_response(response)
         response[0].should be 204
         response[1]["Allow"].should include "POST"
+      end
+      
+      it "the entry index should allow GET, PUT and DELETE" do
+        response = http_options_request("/posts/1")
+        validate_response(response)
+        response[0].should be 204
+        should_allow(response[1], "GET", "PUT", "DELETE")
       end
 
       it "the show action display a specific post in response of a GET request" do
@@ -378,7 +391,7 @@ describe "Optionsful" do
         response = http_options_request("/photos/chick/show/123.json")
         validate_response(response)
         response[0].should be 204
-        response[1]["Allow"].should include "GET"
+        should_allow(response[1], "GET")
       end
 
       after(:all) do

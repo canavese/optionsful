@@ -69,6 +69,17 @@ DEFAULT_ENV = { "rack.version" => Rack::VERSION, "rack.input" => StringIO.new, "
       headers["Allow"].include?(method)
     end
     
+    def should_allow(headers, *method)
+      methods = method
+      allow = headers["Allow"].gsub(',', ' ')
+      methods.each do |m|
+        allow.include?(m)
+        allow.gsub!(m, '')
+      end
+      allow.gsub(' ', '')
+      return allow.empty?
+    end
+    
     def validate_response(response)
       response.should be_a_kind_of Array
       response.size.should == 3
