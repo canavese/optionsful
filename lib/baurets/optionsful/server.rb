@@ -44,6 +44,9 @@ module Baurets
           if origin = @env['HTTP_ORIGIN']
             headers.merge!("Access-Control-Allow-Origin" => origin)
           end
+          if request_headers = @env['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']
+            headers.merge!("Access-Control-Allow-Headers" => request_headers)
+          end
           if access_control_host = @config[:access_control_host]
             headers.merge!("Access-Control" => "allow <#{access_control_host}>")
           end
