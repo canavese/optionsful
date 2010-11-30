@@ -39,6 +39,14 @@ module Baurets
           if @config[:link] == true
             headers.merge!({"Link" => build_link_header})
           end
+          headers.merge!("Access-Control-Allow-Methods" => [allows, 'OPTIONS'].join(", "),
+                         "Access-Control-Max-Age" => '1728000')
+          if origin = @env['HTTP_ORIGIN']
+            headers.merge!("Access-Control-Allow-Origin" => origin)
+          end
+          if access_control_host = @config[:access_control_host]
+            headers.merge!("Access-Control" => "allow <#{access_control_host}>")
+          end
         else
           status = 404
           body = "Not found."
