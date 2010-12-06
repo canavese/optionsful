@@ -50,6 +50,7 @@ module Baurets
           if access_control_host = @config[:access_control_host]
             headers.merge!("Access-Control" => "allow <#{access_control_host}>")
           end
+          headers.merge!("Access-Control-Allow-Credentials" => 'true')
         else
           status = 404
           body = "Not found."
